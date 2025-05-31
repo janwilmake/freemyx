@@ -1,0 +1,9 @@
+{
+  "name": "freemyx",
+  "compatibility_date": "2025-05-30",
+  "assets":{"directory":"./"},
+  "routes": [
+    { "pattern": "freemyx.net", "custom_domain": true },
+    { "pattern": "www.freemyx.net", "custom_domain": true }
+  ]
+}
