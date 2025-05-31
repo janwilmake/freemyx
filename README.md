@@ -8,4 +8,4 @@ Goals:
 
 # Development
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/janwilmake/onlybrowse) <!-- for easy deployment, ensure to add this into the readme of the created project -->
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/janwilmake/freemyx) <!-- for easy deployment, ensure to add this into the readme of the created project -->
