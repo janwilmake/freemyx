@@ -3,8 +3,8 @@
   "attribution": "https://github.com/janwilmake/contextjson",
   "context": {
     "overview": {
-      "summary": "Main application overview including goals and deployment instructions",
-      "pathPatterns": ["README.md", "TODO.md"],
+      "summary": "Main application overview including goals and API specification",
+      "pathPatterns": ["README.md", "TODO.md", "openapi.json"],
       "prompt": "Summarize the main goals, features, and deployment process of this application."
     },
     "web-ui": {
