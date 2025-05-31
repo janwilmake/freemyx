@@ -1,0 +1,143 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Free My X API",
+    "description": "Data liberation service that allows users to authorize third-party applications to access their public X (formerly Twitter) data through OAuth authentication.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Free My X",
+      "url": "https://freemyx.com"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://freemyx.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "get": {
+        "summary": "Initiate X OAuth login",
+        "description": "Redirects the user to X's OAuth authorization page to grant access to their public data. This is handled by the smootherauth-x middleware.",
+        "operationId": "initiateLogin",
+        "tags": ["Authentication"],
+        "responses": {
+          "302": {
+            "description": "Redirect to X OAuth authorization page",
+            "headers": {
+              "Location": {
+                "description": "URL to X OAuth authorization page",
+                "schema": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://api.x.com/oauth2/authorize?..."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error during OAuth initialization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "OAuth initialization failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{username}": {
+      "get": {
+        "summary": "Check user liberation status",
+        "description": "Check if a specific X user has authorized data liberation through Free My X. Returns 200 if the user has opted in to data liberation, 401 if they haven't, or 404 if the user is not found in the system.",
+        "operationId": "checkUserStatus",
+        "tags": ["User Status"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "X username (without @ symbol)",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_]{1,15}$",
+              "example": "johndoe"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User has authorized data liberation",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "OK"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User exists but has not authorized data liberation",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found in the system",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        },
+        "required": ["error"]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "OAuth authentication endpoints"
+    },
+    {
+      "name": "User Status",
+      "description": "User data liberation status checking"
+    }
+  ]
+}

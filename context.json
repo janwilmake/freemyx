@@ -1,0 +1,37 @@
+{
+  "$schema": "https://contextjson.com/schema",
+  "attribution": "https://github.com/janwilmake/contextjson",
+  "context": {
+    "overview": {
+      "summary": "Main application overview including goals and deployment instructions",
+      "pathPatterns": ["README.md", "TODO.md"],
+      "prompt": "Summarize the main goals, features, and deployment process of this application."
+    },
+    "web-ui": {
+      "summary": "Frontend pages for user interaction",
+      "pathPatterns": [
+        "index.html",
+        "privacy.html",
+        "terms.html",
+        "terms.html.md"
+      ],
+      "prompt": "Describe the user interface, design principles, and privacy/terms information presented in these pages."
+    },
+    "api-server": {
+      "summary": "Cloudflare Worker backend",
+      "pathPatterns": ["main.ts"],
+      "prompt": "Explain the API endpoints, authentication middleware, data storage, and user liberation logic implemented."
+    },
+    "deployment": {
+      "summary": "Deployment and configuration files for Cloudflare Worker",
+      "pathPatterns": [
+        "wrangler.jsonc",
+        "package.json",
+        ".dev.vars.example",
+        ".gitignore",
+        ".assetsignore"
+      ],
+      "prompt": "Outline the deployment configuration, environment variables, and dependencies."
+    }
+  }
+}
