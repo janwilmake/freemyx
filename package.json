@@ -1,4 +1,6 @@
 {
   "scripts": {},
-  "dependencies": {}
+  "dependencies": {
+    "smootherauth-x": "^0.0.1"
+  }
 }

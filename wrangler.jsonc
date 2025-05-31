@@ -1,7 +1,14 @@
 {
   "name": "freemyx",
   "compatibility_date": "2025-05-30",
-  "assets":{"directory":"./"},
+  "main": "main.ts",
+  "assets": { "directory": "./" },
+  "kv_namespaces": [
+    {
+      "binding": "APPROVED_USERS",
+      "id": "73639ae0cd9540f2a28d5e3f2969348e"
+    }
+  ],
   "routes": [
     { "pattern": "freemyx.com", "custom_domain": true },
     { "pattern": "www.freemyx.com", "custom_domain": true }
