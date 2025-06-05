@@ -7,17 +7,17 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free My X - Liberate Your X Data</title>
+    <title>Free My X - Your Data, Your Rights</title>
     <meta name="description"
-        content="Take control of your X data. Authorize third-party access and break free from platform lock-in." />
+        content="Why users should control and profit from their own digital footprints. Take back control of your X data today." />
     <meta name="robots" content="index, follow" />
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://freemyx.com" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Free My X - Liberate Your X Data" />
+    <meta property="og:title" content="Free My X - Your Data, Your Rights" />
     <meta property="og:description"
-        content="Take control of your X data. Authorize third-party access and break free from platform lock-in." />
+        content="Why users should control and profit from their own digital footprints. Take back control of your X data today." />
     <meta property="og:image" content="https://quickog.com/screenshot/freemyx.com" />
     <meta property="og:image:alt"
         content="Take control of your X data. Authorize third-party access and break free from platform lock-in." />
@@ -28,9 +28,9 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content="freemyx.com" />
     <meta property="twitter:url" content="https://freemyx.com" />
-    <meta name="twitter:title" content="Free My X - Liberate Your X Data" />
+    <meta name="twitter:title" content="Free My X - Your Data, Your Rights" />
     <meta name="twitter:description"
-        content="Take control of your X data. Authorize third-party access and break free from platform lock-in." />
+        content="Why users should control and profit from their own digital footprints. Take back control of your X data today." />
     <meta name="twitter:image" content="https://quickog.com/screenshot/freemyx.com" />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -58,6 +58,12 @@
             line-height: 1;
             font-weight: 900;
             letter-spacing: -0.02em;
+        }
+
+        .large-heading {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            font-weight: 800;
         }
 
         .liberation-pulse {
@@ -101,13 +107,62 @@
                 left: 100%;
             }
         }
+
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #22c55e;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: #86efac;
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #d1d5db;
+        }
+
+        .content-section ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            color: #d1d5db;
+        }
+
+        .content-section strong {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22c55e;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
     </style>
 </head>
 
 <body class="text-white">
     <main class="min-h-screen liberation-gradient">
+        <!-- Hero Section -->
         <div class="max-w-5xl mx-auto px-4 py-16 md:py-24">
-            <!-- Hero Section -->
             <div class="text-center mb-20">
                 <div class="mb-8">
                     <div
@@ -118,77 +173,259 @@
                 </div>
 
                 <h1 class="giant-heading mb-6">
-                    Free My
-                    <svg class="inline-block w-24 h-24 md:w-28 md:h-28 -mt-4 text-green-400" viewBox="0 0 24 24"
-                        fill="currentColor">
-                        <path
-                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
+                    Your Data,<br>
+                    Your Rights
                 </h1>
 
                 <p
                     class="text-2xl md:text-3xl font-bold mb-10 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                    Liberate Your X Data. Break Free From Platform Lock-in.
-                </p>
-
-                <div class="free-border rounded-xl p-8 bg-green-500/5 mb-12 mx-auto max-w-3xl break-chains">
-                    <div class="flex items-center justify-center gap-6 mb-6">
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 mx-auto mb-3 bg-red-500/20 rounded-full flex items-center justify-center">
-                                <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                            </div>
-                            <p class="text-red-400 font-medium">Locked Data</p>
-                        </div>
-
-                        <svg class="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 mx-auto mb-3 bg-green-500/20 rounded-full flex items-center justify-center">
-                                <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <p class="text-green-400 font-medium">Liberated Data</p>
-                        </div>
-                    </div>
-                    <p class="text-xl text-gray-300">
-                        One OAuth authorization to give you complete control over who can access your X content
-                    </p>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-4 mb-6">
-                    <a href="/login"
-                        class="bg-green-600 hover:bg-green-700 px-12 py-6 rounded-full font-bold text-xl transition-all button-glow flex items-center gap-3">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                        </svg>
-                        Liberate My Data
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </a>
-                </div>
-
-                <p class="text-sm text-gray-400 max-w-2xl mx-auto">
-                    By authorizing FreeMy X, you grant permission for approved third-party applications to access your X
-                    posts and data.
-                    <a href="/privacy" class="text-green-400 underline">Learn about our privacy protections</a>
+                    Why Users Should Control and Profit from Their Own Digital Footprints
                 </p>
             </div>
+        </div>
 
-            <!-- Value Props Section -->
+        <!-- Story Section -->
+        <div class="max-w-6xl mx-auto px-4 py-16">
+            <div class="content-section">
+                <div class="mb-16">
+                    <h2 class="large-heading mb-8 text-center">
+                        How AI Companies Get Rich Off Your Thoughts<br>
+                        <span class="text-xl text-gray-400 font-normal">While You're Locked Out of the Value You
+                            Created</span>
+                    </h2>
+
+                    <div class="highlight-box">
+                        <p class="text-xl font-medium mb-0">
+                            <strong>The Great Data Paradox:</strong> Your thoughts are valuable enough to power
+                            billion-dollar AI companies, but not valuable enough for you to control or profit from.
+                        </p>
+                    </div>
+
+                    <p>
+                        Every day, millions of users pour their thoughts, expertise, and creativity onto platforms like
+                        X (formerly Twitter). They share insights about their industries, answer questions, engage in
+                        debates, and collectively build one of the world's largest repositories of human knowledge and
+                        discourse.
+                    </p>
+
+                    <p>
+                        Yet when AI companies harvest this data to train models that power $20/month ChatGPT
+                        subscriptions or enterprise AI tools worth billions, the original creators see none of the
+                        profits.
+                    </p>
+
+                    <p>
+                        Meanwhile, these same users can't easily access, control, or monetize their own contributions.
+                        Want to download your complete X data? You get a limited export. Want to sell access to your own
+                        posts? That might violate the terms of service. Want to create a chatbot trained on your
+                        expertise? You'll need to manually copy-paste years of your own content.
+                    </p>
+
+                    <h3>The Current Broken System</h3>
+                    <p>
+                        Under X's current terms, users retain ownership of their content but grant the platform an
+                        extraordinarily broad license. This license allows X to:
+                    </p>
+                    <ul class="list-disc">
+                        <li>Use your content for training AI models</li>
+                        <li>Share your data with other companies for "improving services"</li>
+                        <li>Distribute your content across any media, now or in the future</li>
+                        <li>Do all of this without paying you a cent</li>
+                    </ul>
+
+                    <p>
+                        The platform then turns around and licenses this data to AI companies in bulk deals worth
+                        millions. Your witty observations about your industry? Your thoughtful threads explaining
+                        complex topics? Your years of accumulated wisdom? All of it becomes training data for models
+                        that charge users monthly subscriptions to access synthesized versions of knowledge you helped
+                        create.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liberation CTA Section -->
+        <div class="max-w-5xl mx-auto px-4 py-16">
+            <div
+                class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16 break-chains">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold mb-6">Take Back Control of Your Data</h2>
+                    <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-xl">
+                        Don't let platforms hold your content hostage. Liberation starts with one click.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4 mb-6">
+                        <a href="/login"
+                            class="bg-green-600 hover:bg-green-700 px-12 py-6 rounded-full font-bold text-xl transition-all button-glow flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                            </svg>
+                            Free My X Data
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        Secure OAuth authorization. Read our <a href="/privacy" class="text-green-400 underline">Privacy
+                            Policy</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Content Section -->
+        <div class="max-w-6xl mx-auto px-4 py-16">
+            <div class="content-section">
+                <h2>What Users Deserve: True Data Ownership</h2>
+                <p>Imagine a different world—one where users actually control their digital contributions:</p>
+
+                <h3>Personal AI Assistants</h3>
+                <p>
+                    You should be able to create a chatbot trained specifically on your own posts, replies, and
+                    expertise. Imagine having an AI assistant that understands your writing style, remembers your
+                    professional insights, and can help you draft content that sounds authentically like you. This is
+                    your intellectual property—you should own the AI trained on it.
+                </p>
+
+                <h3>Community Knowledge Bases</h3>
+                <p>
+                    Groups of users should be able to pool their data consensually to create specialized AI models. A
+                    community of developers could create a programming assistant trained on their collective
+                    discussions. Medical professionals could build diagnostic aids from their anonymized case
+                    discussions. Academic researchers could develop field-specific tools from their scholarly exchanges.
+                </p>
+
+                <h3>Selective Data Licensing</h3>
+                <p>
+                    Just as you choose who can see your private posts, you should control who can train AI models on
+                    your content. Want to share with non-profit research? Opt in. Prefer to keep your data away from
+                    certain companies? Opt out. Believe your expertise is valuable enough to charge for? Set your price.
+                </p>
+
+                <h3>Revenue Sharing</h3>
+                <p>
+                    If your data helps train a commercial AI model, you should get a cut of the profits. The current
+                    system where platforms capture 100% of the value from user-generated data is unsustainable and
+                    unfair.
+                </p>
+
+                <h2>The Technology Exists</h2>
+                <p>None of this is technically impossible. We already have:</p>
+                <ul class="list-disc">
+                    <li><strong>Personal AI training:</strong> Tools like GPT fine-tuning can create personalized models
+                        from individual datasets</li>
+                    <li><strong>Federated learning:</strong> Technology that allows AI training across distributed data
+                        without centralizing it</li>
+                    <li><strong>Blockchain-based licensing:</strong> Systems for tracking data usage and automatically
+                        distributing payments</li>
+                    <li><strong>Privacy-preserving AI:</strong> Methods to train models while protecting individual
+                        privacy</li>
+                </ul>
+                <p>What's missing isn't technology—it's the will to change a system that currently benefits platforms
+                    and AI companies at users' expense.</p>
+
+                <h2>Real-World Applications</h2>
+                <p>Consider the possibilities:</p>
+
+                <p><strong>For Professionals:</strong> A marketing consultant could create an AI trained on their
+                    successful campaigns, licensing it to clients or selling access to their strategic insights.</p>
+
+                <p><strong>For Educators:</strong> Teachers could develop personalized tutoring bots trained on their
+                    most effective explanations, helping students even outside class hours.</p>
+
+                <p><strong>For Communities:</strong> Medical support groups could create AI counselors trained on their
+                    collective experiences, providing 24/7 peer support to new members.</p>
+
+                <p><strong>For Creators:</strong> Writers could develop AI assistants that help with research and
+                    drafting, trained specifically on their style and expertise.</p>
+
+                <h2>The Path Forward</h2>
+                <p>We need platform policies and regulations that recognize users' rights to:</p>
+                <ol class="list-decimal list-inside space-y-2">
+                    <li><strong>Full data portability:</strong> Complete, machine-readable exports of all user data and
+                        interactions</li>
+                    <li><strong>Granular consent controls:</strong> Ability to approve or deny specific uses of personal
+                        data</li>
+                    <li><strong>Revenue sharing:</strong> Fair compensation when personal data contributes to commercial
+                        AI models</li>
+                    <li><strong>Third-party tool access:</strong> APIs that allow users to train personal AI models on
+                        their own data</li>
+                    <li><strong>Community data pooling:</strong> Systems for groups to consensually aggregate their data
+                        for shared AI development</li>
+                </ol>
+
+                <h2>Why This Matters Now</h2>
+                <p>
+                    As AI becomes central to how we work, learn, and communicate, control over training data becomes a
+                    fundamental economic and creative right. The current system creates a new form of digital feudalism:
+                    users as serfs generating value for AI lords who own the means of production.
+                </p>
+                <p>
+                    But it doesn't have to be this way. The knowledge economy should benefit those who create the
+                    knowledge. Your insights, your creativity, your expertise—these have value. And in a fair system,
+                    that value should flow back to you.
+                </p>
+
+                <h2>Taking Action</h2>
+                <p>
+                    The conversation is already starting. Some platforms are experimenting with user compensation
+                    models. Governments are considering data rights legislation. AI companies are facing pressure to be
+                    more transparent about training data sources.
+                </p>
+                <p>But real change will require users to demand their rights collectively. We need to:</p>
+                <ul class="list-disc">
+                    <li>Advocate for stronger data portability laws</li>
+                    <li>Support platforms that offer fair revenue sharing</li>
+                    <li>Demand transparency about how our data is used in AI training</li>
+                    <li>Build tools that give users control over their digital contributions</li>
+                </ul>
+                <p><strong>Your thoughts, your data, your rights. It's time to take them back.</strong></p>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="max-w-5xl mx-auto px-4 py-16">
+            <div class="free-border rounded-xl p-10 mb-20 bg-green-500/5">
+                <h2 class="text-3xl font-bold mb-12 text-center">How Data Liberation Works</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Authorize</h3>
+                        <p class="text-gray-400">
+                            Connect your X account through secure OAuth to grant data access permissions
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Control</h3>
+                        <p class="text-gray-400">
+                            Manage which third-party applications can access your liberated X data
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Freedom</h3>
+                        <p class="text-gray-400">
+                            Your data works for you across multiple platforms and applications
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Props Section -->
+        <div class="max-w-5xl mx-auto px-4 py-16">
             <div class="grid md:grid-cols-3 gap-8 mb-20">
                 <div class="free-border rounded-xl p-8 hover:bg-green-500/5 transition-all duration-300 group">
                     <div class="text-green-400 mb-6 group-hover:scale-110 transition-transform">
@@ -230,51 +467,17 @@
                     </p>
                 </div>
             </div>
+        </div>
 
-            <!-- How It Works Section -->
-            <div class="free-border rounded-xl p-10 mb-20 bg-green-500/5">
-                <h2 class="text-3xl font-bold mb-12 text-center">How Data Liberation Works</h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="text-center">
-                        <div
-                            class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
-                            1
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Authorize</h3>
-                        <p class="text-gray-400">
-                            Connect your X account through secure OAuth to grant data access permissions
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
-                            2
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Control</h3>
-                        <p class="text-gray-400">
-                            Manage which third-party applications can access your liberated X data
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div
-                            class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
-                            3
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Freedom</h3>
-                        <p class="text-gray-400">
-                            Your data works for you across multiple platforms and applications
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CTA Section -->
+        <!-- Final CTA Section -->
+        <div class="max-w-5xl mx-auto px-4 py-16">
             <div
                 class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16 break-chains">
                 <div class="text-center">
                     <h2 class="text-4xl font-bold mb-6">Join the Data Liberation Movement</h2>
                     <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-xl">
-                        Don't let platforms hold your content hostage. Take the first step towards true data ownership.
+                        The future of data ownership starts with users like you taking the first step. Don't wait for
+                        permission—liberate your data today.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 mb-6">
                         <a href="/login"
@@ -283,7 +486,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                             </svg>
-                            Liberate Now
+                            Free My X Data Now
                         </a>
                         <a href="/learn-more"
                             class="bg-white/10 hover:bg-white/20 px-8 py-4 rounded-full font-medium text-lg transition-all flex items-center gap-2">
@@ -306,6 +509,7 @@
                 <div class="flex justify-center gap-6 mb-6">
                     <a href="/privacy" class="hover:text-green-400 transition-colors">Privacy</a>
                     <a href="/terms" class="hover:text-green-400 transition-colors">Terms</a>
+                    <a href="/contact" class="hover:text-green-400 transition-colors">Contact</a>
                 </div>
                 <p class="text-sm">
                     © 2025 FreeMy X. Empowering data liberation. Not affiliated with X Corp.
