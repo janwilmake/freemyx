@@ -190,6 +190,9 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             color: #d1d5db;
             font-weight: 500;
             line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
         }
 
         .poll-option.checked {
@@ -303,49 +306,44 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                 <form id="data-usage-poll" class="max-w-3xl mx-auto">
                     <div class="space-y-4 mb-8">
                         <div class="poll-option">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="allow_x_ai" class="mt-1">
-                                <span>Allow X to train their AI models with my data (requires tweet.read scope)</span>
+                            <label>
+                                <input type="checkbox" name="choices" value="allow_x_ai">
+                                <span>Allow X to train their AI models with my data</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="allow_third_party_ai" class="mt-1">
-                                <span>Allow third-party companies to train AI models with my data (requires tweet.read
-                                    scope)</span>
+                            <label>
+                                <input type="checkbox" name="choices" value="allow_third_party_ai">
+                                <span>Allow third-party companies to train AI models with my data</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="controlled_access" class="mt-1">
-                                <span>I want full control over which third parties may access my data (requires
-                                    users.read scope)</span>
+                            <label>
+                                <input type="checkbox" name="choices" value="controlled_access">
+                                <span>I want full control over which third parties may access my data</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="public_domain_all" class="mt-1">
-                                <span>Make my public X posts truly public domain for anyone (requires tweet.read
-                                    scope)</span>
+                            <label>
+                                <input type="checkbox" name="choices" value="public_domain_all">
+                                <span>Make my public X posts truly public domain for anyone</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="public_domain_individuals" class="mt-1">
-                                <span>Make my public X posts available to individuals only, not companies (requires
-                                    tweet.read scope)</span>
+                            <label>
+                                <input type="checkbox" name="choices" value="public_domain_individuals">
+                                <span>Make my public X posts available to individuals only, not companies</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
-                            <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="allow_follows_access" class="mt-1">
-                                <span>Allow access to my following/followers for network analysis (requires follows.read
-                                    scope)</span>
+                            <label>
+                                <input type="checkbox" name="choices" value="allow_follows_access">
+                                <span>Allow access to my following/followers for network analysis</span>
                             </label>
                         </div>
                     </div>
@@ -656,11 +654,24 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
         // Handle poll option click (toggle checkbox)
         document.querySelectorAll('.poll-option').forEach(option => {
             option.addEventListener('click', function (e) {
-                if (e.target.type !== 'checkbox') {
-                    const checkbox = this.querySelector('input[type="checkbox"]');
-                    checkbox.checked = !checkbox.checked;
-                    checkbox.dispatchEvent(new Event('change'));
+                // Don't trigger if clicking on input or label directly
+                if (e.target.type === 'checkbox' || e.target.tagName === 'LABEL') {
+                    return;
                 }
+
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
+            });
+        });
+
+        // Make label clicks work properly
+        document.querySelectorAll('.poll-option label').forEach(label => {
+            label.addEventListener('click', function (e) {
+                e.preventDefault();
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                checkbox.dispatchEvent(new Event('change'));
             });
         });
     </script>

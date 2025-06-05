@@ -1,6 +1,6 @@
 {
   "name": "freemyx",
-  "compatibility_date": "2025-06-06",
+  "compatibility_date": "2025-06-05",
   "main": "main.ts",
   "assets": { "directory": "./" },
   "kv_namespaces": [

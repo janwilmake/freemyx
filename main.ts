@@ -50,7 +50,7 @@ export default {
 
         // Check if user is in our KV store
         const userData = await env.APPROVED_USERS.get(user.username);
-        const existingUserData = userData ? JSON.parse(userData) : null;
+        let existingUserData = userData ? JSON.parse(userData) : null;
         const isLiberated = existingUserData?.liberated || false;
 
         // If user has vote data and is not yet in KV, store them
