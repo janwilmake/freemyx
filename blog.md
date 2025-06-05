@@ -1,4 +1,9 @@
-<!-- source; https://lmpify.com/previous-prompt-ht-jjwjwn0 -->
+<!-- source:
+https://uithub.com/janwilmake/xytext/tree/main/privacy-and-terms?lines=false
+https://lmpify.com/httpsuithubcomj-eq69dn0
+https://lmpify.com/previous-prompt-ht-jjwjwn0
+
+-->
 
 # Your Data, Your Rights: Why Users Should Control and Profit from Their Own Digital Footprints
 
