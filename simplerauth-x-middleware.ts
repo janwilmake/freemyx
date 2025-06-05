@@ -1,12 +1,12 @@
 /*
 ======X LOGIN SCRIPT========
-This is the most simple version of x oauth.
+This is the most simple version of x oauth with vote tracking.
 
 To use it, ensure to create a x oauth client, then set .dev.vars and wrangler.toml alike with the Env variables required
 
-And navigate to /login from the homepage, with optional parameters ?scope=a,b,c
+And navigate to /login from the homepage, with optional parameters ?vote=choice1,choice2,choice3
 
-In localhost this won't work due to your hardcoded redirect url; It's better to simply set your localstorage manually.
+The middleware now tracks votes and determines appropriate OAuth scopes based on user choices.
 */
 
 export interface Env {
@@ -39,6 +39,34 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
   return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
+function determineScopesFromVote(voteChoices: string[]): string[] {
+  const scopes = ["users.read", "offline.access"]; // Base scopes
+
+  // Map vote choices to required scopes
+  const scopeMapping = {
+    allow_x_ai: ["tweet.read"],
+    allow_third_party_ai: ["tweet.read"],
+    controlled_access: ["users.read"], // Already included in base
+    public_domain_all: ["tweet.read"],
+    public_domain_individuals: ["tweet.read"],
+    allow_follows_access: ["follows.read"],
+  };
+
+  // Add scopes based on vote choices
+  voteChoices.forEach((choice) => {
+    const requiredScopes = scopeMapping[choice as keyof typeof scopeMapping];
+    if (requiredScopes) {
+      requiredScopes.forEach((scope) => {
+        if (!scopes.includes(scope)) {
+          scopes.push(scope);
+        }
+      });
+    }
+  });
+
+  return scopes;
+}
+
 export const middleware = async (request: Request, env: Env) => {
   const url = new URL(request.url);
 
@@ -50,13 +78,20 @@ export const middleware = async (request: Request, env: Env) => {
       headers: {
         Location: redirectTo,
         "Set-Cookie":
-          "x_access_token=; HttpOnly; Secure; SameSite=Lax; Max-Age=0; Path=/",
+          "x_access_token=; HttpOnly; Secure; SameSite=Lax; Max-Age=0; Path=/, x_vote_data=; HttpOnly; Secure; SameSite=Lax; Max-Age=0; Path=/",
       },
     });
   }
+
   // Login page route
   if (url.pathname === "/login") {
-    const scope = url.searchParams.get("scope");
+    const voteParam = url.searchParams.get("vote");
+    const voteChoices = voteParam ? voteParam.split(",") : [];
+
+    // Determine OAuth scopes based on vote choices
+    const requiredScopes = determineScopesFromVote(voteChoices);
+    const scopeString = requiredScopes.join(" ");
+
     const state = await generateRandomString(16);
     const codeVerifier = await generateRandomString(43);
     const codeChallenge = await generateCodeChallenge(codeVerifier);
@@ -67,10 +102,11 @@ export const middleware = async (request: Request, env: Env) => {
       }&redirect_uri=${encodeURIComponent(
         env.X_REDIRECT_URI,
       )}&scope=${encodeURIComponent(
-        scope || "users.read follows.read tweet.read offline.access",
+        scopeString,
       )}&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`,
     });
 
+    // Store OAuth state and code verifier
     headers.append(
       "Set-Cookie",
       `x_oauth_state=${state}; HttpOnly; Path=/; Secure; SameSite=Lax; Max-Age=600`,
@@ -80,7 +116,22 @@ export const middleware = async (request: Request, env: Env) => {
       `x_code_verifier=${codeVerifier}; HttpOnly; Path=/; Secure; SameSite=Lax; Max-Age=600`,
     );
 
-    return new Response("Redirecting", { status: 307, headers });
+    // Store vote data if provided
+    if (voteChoices.length > 0) {
+      const voteData = {
+        choices: voteChoices,
+        scopes: requiredScopes,
+        timestamp: new Date().toISOString(),
+      };
+      headers.append(
+        "Set-Cookie",
+        `x_vote_data=${encodeURIComponent(
+          JSON.stringify(voteData),
+        )}; HttpOnly; Path=/; Secure; SameSite=Lax; Max-Age=600`,
+      );
+    }
+
+    return new Response("Redirecting to X OAuth", { status: 307, headers });
   }
 
   // Twitter OAuth callback route
@@ -95,6 +146,9 @@ export const middleware = async (request: Request, env: Env) => {
       ?.split("=")[1];
     const codeVerifier = cookies
       .find((c) => c.startsWith("x_code_verifier="))
+      ?.split("=")[1];
+    const voteDataCookie = cookies
+      .find((c) => c.startsWith("x_vote_data="))
       ?.split("=")[1];
 
     // Validate state and code verifier
@@ -138,25 +192,41 @@ export const middleware = async (request: Request, env: Env) => {
       );
 
       if (!tokenResponse.ok) {
-        throw new Error(`Twitter API responded with ${tokenResponse.status}`);
+        const errorText = await tokenResponse.text();
+        throw new Error(
+          `Twitter API responded with ${tokenResponse.status}: ${errorText}`,
+        );
       }
 
       const { access_token }: any = await tokenResponse.json();
       const headers = new Headers({
-        Location: url.origin + (env.LOGIN_REDIRECT_URI || "/"),
+        Location: url.origin + (env.LOGIN_REDIRECT_URI || "/dashboard"),
       });
 
-      // Set access token cookie and clear temporary cookies
+      // Set access token cookie
       headers.append(
         "Set-Cookie",
         `x_access_token=${encodeURIComponent(
           access_token,
         )}; HttpOnly; Path=/; Secure; SameSite=Lax; Max-Age=34560000`,
       );
+
+      // Preserve vote data if it exists
+      if (voteDataCookie) {
+        headers.append(
+          "Set-Cookie",
+          `x_vote_data=${voteDataCookie}; HttpOnly; Path=/; Secure; SameSite=Lax; Max-Age=34560000`,
+        );
+      }
+
+      // Clear temporary cookies
       headers.append("Set-Cookie", `x_oauth_state=; Max-Age=0`);
       headers.append("Set-Cookie", `x_code_verifier=; Max-Age=0`);
 
-      return new Response("Redirecting", { status: 307, headers });
+      return new Response("Authorization successful, redirecting...", {
+        status: 307,
+        headers,
+      });
     } catch (error) {
       return new Response(
         html`
@@ -166,10 +236,14 @@ export const middleware = async (request: Request, env: Env) => {
               <title>Login Failed</title>
             </head>
             <body>
-              <h1>Twitter Login Failed</h1>
+              <h1>X Authorization Failed</h1>
               <p>${error instanceof Error ? error.message : "Unknown error"}</p>
               <script>
-                alert("Twitter login failed");
+                alert(
+                  "X authorization failed: ${error instanceof Error
+                    ? error.message
+                    : "Unknown error"}",
+                );
                 window.location.href = "/";
               </script>
             </body>
@@ -179,7 +253,7 @@ export const middleware = async (request: Request, env: Env) => {
           status: 500,
           headers: {
             "Content-Type": "text/html",
-            "Set-Cookie": `x_oauth_state=; Max-Age=0, x_code_verifier=; Max-Age=0`,
+            "Set-Cookie": `x_oauth_state=; Max-Age=0, x_code_verifier=; Max-Age=0, x_vote_data=; Max-Age=0`,
           },
         },
       );

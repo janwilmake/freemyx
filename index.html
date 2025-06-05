@@ -293,10 +293,10 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             <div
                 class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16 break-chains">
                 <div class="text-center mb-8">
-                    <h2 class="text-4xl font-bold mb-6">Vote: How Should Your Data Be Used?</h2>
+                    <h2 class="text-4xl font-bold mb-6">Cast Your Vote with Your X Account</h2>
                     <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-xl">
-                        Take control by choosing exactly how your X data can be accessed and used. Your voice, your
-                        choice.
+                        Take control by choosing exactly how your X data should be used. By voting, you authorize
+                        third-party access according to your choices and join the data liberation movement.
                     </p>
                 </div>
 
@@ -304,38 +304,48 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                     <div class="space-y-4 mb-8">
                         <div class="poll-option">
                             <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="0" class="mt-1">
-                                <span>Allow X to train their AI models with my data</span>
+                                <input type="checkbox" name="choices" value="allow_x_ai" class="mt-1">
+                                <span>Allow X to train their AI models with my data (requires tweet.read scope)</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
                             <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="1" class="mt-1">
-                                <span>Allow third-party companies to train AI models with my data</span>
+                                <input type="checkbox" name="choices" value="allow_third_party_ai" class="mt-1">
+                                <span>Allow third-party companies to train AI models with my data (requires tweet.read
+                                    scope)</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
                             <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="2" class="mt-1">
-                                <span>I want full control over which third parties may and may not access my data</span>
+                                <input type="checkbox" name="choices" value="controlled_access" class="mt-1">
+                                <span>I want full control over which third parties may access my data (requires
+                                    users.read scope)</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
                             <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="3" class="mt-1">
-                                <span>Make my public X posts truly public domain (anyone, including individuals and
-                                    companies, may access them)</span>
+                                <input type="checkbox" name="choices" value="public_domain_all" class="mt-1">
+                                <span>Make my public X posts truly public domain for anyone (requires tweet.read
+                                    scope)</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
                             <label class="flex items-start">
-                                <input type="checkbox" name="choices" value="4" class="mt-1">
-                                <span>Make my public X posts public domain for individuals only, but not for
-                                    companies</span>
+                                <input type="checkbox" name="choices" value="public_domain_individuals" class="mt-1">
+                                <span>Make my public X posts available to individuals only, not companies (requires
+                                    tweet.read scope)</span>
+                            </label>
+                        </div>
+
+                        <div class="poll-option">
+                            <label class="flex items-start">
+                                <input type="checkbox" name="choices" value="allow_follows_access" class="mt-1">
+                                <span>Allow access to my following/followers for network analysis (requires follows.read
+                                    scope)</span>
                             </label>
                         </div>
                     </div>
@@ -347,13 +357,25 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Submit My Vote
+                            Vote & Authorize with X
                         </button>
                         <p class="text-sm text-gray-400 mt-4">
-                            Your preferences will be recorded to help shape the future of data rights
+                            Your vote will be recorded and you'll authorize the requested scopes with your X account
                         </p>
                     </div>
                 </form>
+
+                <div class="mt-8 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                    <h3 class="font-bold text-blue-300 mb-2">What happens when you vote:</h3>
+                    <ul class="text-sm text-blue-200 space-y-1">
+                        <li>• Your vote choices are recorded and associated with your X account</li>
+                        <li>• You authorize our service to access your X data according to your selected permissions
+                        </li>
+                        <li>• Third-party applications can check your authorization status and access your data
+                            accordingly</li>
+                        <li>• You can revoke access at any time through your dashboard</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -477,9 +499,10 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                             class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
                             1
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Authorize</h3>
+                        <h3 class="text-xl font-bold mb-3">Vote & Authorize</h3>
                         <p class="text-gray-400">
-                            Connect your X account through secure OAuth to grant data access permissions
+                            Cast your vote and connect your X account through secure OAuth with custom scopes based on
+                            your choices
                         </p>
                     </div>
                     <div class="text-center">
@@ -489,7 +512,8 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                         </div>
                         <h3 class="text-xl font-bold mb-3">Control</h3>
                         <p class="text-gray-400">
-                            Manage which third-party applications can access your liberated X data
+                            Manage which third-party applications can access your liberated X data according to your
+                            vote preferences
                         </p>
                     </div>
                     <div class="text-center">
@@ -499,7 +523,8 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                         </div>
                         <h3 class="text-xl font-bold mb-3">Freedom</h3>
                         <p class="text-gray-400">
-                            Your data works for you across multiple platforms and applications
+                            Your vote is recorded and your data works for you across multiple platforms according to
+                            your authorization
                         </p>
                     </div>
                 </div>
@@ -516,10 +541,9 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Take Control</h3>
+                    <h3 class="text-2xl font-bold mb-4">Vote & Control</h3>
                     <p class="text-gray-400 text-lg">
-                        Your data belongs to you. Decide who gets access and when, breaking free from platform
-                        restrictions.
+                        Your data belongs to you. Vote on how it should be used and authorize specific access levels.
                     </p>
                 </div>
 
@@ -530,9 +554,10 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                                 d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Instant Liberation</h3>
+                    <h3 class="text-2xl font-bold mb-4">Granular Authorization</h3>
                     <p class="text-gray-400 text-lg">
-                        One-click OAuth authorization unlocks your entire X history for approved third-party access.
+                        Your vote determines the exact X API scopes requested, giving you precise control over data
+                        access.
                     </p>
                 </div>
 
@@ -543,9 +568,9 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Secure & Trusted</h3>
+                    <h3 class="text-2xl font-bold mb-4">Secure & Transparent</h3>
                     <p class="text-gray-400 text-lg">
-                        Built with security-first principles. Your authorization, your rules, your data freedom.
+                        Your vote is recorded, your authorization is transparent, and your data freedom is secure.
                     </p>
                 </div>
             </div>
@@ -556,9 +581,10 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             <div
                 class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16 break-chains">
                 <div class="text-center">
-                    <h2 class="text-4xl font-bold mb-6">Ready to Take Control?</h2>
+                    <h2 class="text-4xl font-bold mb-6">Ready to Vote and Take Control?</h2>
                     <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-xl">
-                        Join the movement for data liberation. Connect your X account and start controlling how your
+                        Join the movement for data liberation. Cast your vote and authorize your X account to start
+                        controlling how your
                         data is used.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 mb-6">
@@ -568,13 +594,14 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                             </svg>
-                            Free My X Data Now
+                            Vote & Free My X Data
                         </a>
 
                     </div>
                     <p class="text-sm text-gray-400">
-                        Free and secure OAuth authorization. Read our <a href="/terms"
-                            class="text-green-400 underline">Terms of Service</a>
+                        Secure OAuth authorization with custom scopes. Read our <a href="/terms"
+                            class="text-green-400 underline">Terms of Service</a> and <a href="/privacy"
+                            class="text-green-400 underline">Privacy Policy</a>
                     </p>
                 </div>
             </div>
@@ -587,7 +614,7 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                     <a href="/contact" class="hover:text-green-400 transition-colors">Contact</a>
                 </div>
                 <p class="text-sm">
-                    © 2025 FreeMy X. Empowering data liberation. Not affiliated with X Corp.
+                    © 2025 FreeMy X. Empowering data liberation through democratic voting. Not affiliated with X Corp.
                 </p>
             </div>
         </div>
@@ -602,10 +629,15 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             const checkedBoxes = document.querySelectorAll('input[name="choices"]:checked');
             const choices = Array.from(checkedBoxes).map(cb => cb.value);
 
-            // Create query string
-            const queryString = choices.length > 0 ? `?choice=${choices.join(',')}` : '';
+            if (choices.length === 0) {
+                alert('Please select at least one option to proceed.');
+                return;
+            }
 
-            // Navigate to login with choices
+            // Create query string with vote choices
+            const queryString = `?vote=${choices.join(',')}`;
+
+            // Navigate to login with vote choices
             window.location.href = '/login' + queryString;
         });
 

@@ -12,11 +12,19 @@ export default {
 
     const url = new URL(request.url);
 
-    // Get X access token from cookies
-    const token = request.headers
-      .get("Cookie")
-      ?.split(";")
-      .find((c) => c.trim().startsWith("x_access_token="))
+    // Get X access token and vote data from cookies
+    const cookies =
+      request.headers
+        .get("Cookie")
+        ?.split(";")
+        .map((c) => c.trim()) || [];
+
+    const token = cookies
+      .find((c) => c.startsWith("x_access_token="))
+      ?.split("=")[1];
+
+    const voteDataCookie = cookies
+      .find((c) => c.startsWith("x_vote_data="))
       ?.split("=")[1];
 
     // Dashboard route - shows user's liberation status
@@ -42,11 +50,41 @@ export default {
 
         // Check if user is in our KV store
         const userData = await env.APPROVED_USERS.get(user.username);
-        const isLiberated = userData ? JSON.parse(userData).liberated : false;
+        const existingUserData = userData ? JSON.parse(userData) : null;
+        const isLiberated = existingUserData?.liberated || false;
 
-        return new Response(getDashboardHTML(user, isLiberated), {
-          headers: { "Content-Type": "text/html" },
-        });
+        // If user has vote data and is not yet in KV, store them
+        if (voteDataCookie && !existingUserData) {
+          try {
+            const voteData = JSON.parse(decodeURIComponent(voteDataCookie));
+            const newUserData = {
+              userId: user.id,
+              username: user.username,
+              name: user.name,
+              liberated: true, // Auto-liberate when they vote and authorize
+              vote: voteData,
+              authorizedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+
+            await env.APPROVED_USERS.put(
+              user.username,
+              JSON.stringify(newUserData),
+            );
+
+            // Update local data for display
+            existingUserData = newUserData;
+          } catch (error) {
+            console.error("Failed to parse vote data:", error);
+          }
+        }
+
+        return new Response(
+          getDashboardHTML(user, isLiberated, existingUserData),
+          {
+            headers: { "Content-Type": "text/html" },
+          },
+        );
       } catch (error) {
         return new Response(null, {
           status: 302,
@@ -70,10 +108,18 @@ export default {
 
         // Get current status
         const existingData = await env.APPROVED_USERS.get(user.username);
-        const currentStatus = existingData ? JSON.parse(existingData) : null;
-        const newLiberatedStatus = currentStatus
-          ? !currentStatus.liberated
-          : true;
+        const currentData = existingData ? JSON.parse(existingData) : null;
+        const newLiberatedStatus = currentData ? !currentData.liberated : true;
+
+        // Preserve vote data if it exists
+        let voteData = currentData?.vote || null;
+        if (!voteData && voteDataCookie) {
+          try {
+            voteData = JSON.parse(decodeURIComponent(voteDataCookie));
+          } catch (error) {
+            console.error("Failed to parse vote data:", error);
+          }
+        }
 
         // Store user data with new status
         const userData = {
@@ -81,6 +127,8 @@ export default {
           username: user.username,
           name: user.name,
           liberated: newLiberatedStatus,
+          vote: voteData,
+          authorizedAt: currentData?.authorizedAt || new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };
 
@@ -114,9 +162,22 @@ export default {
       const user = JSON.parse(userData);
 
       if (user.liberated) {
-        return new Response("OK", { status: 200 });
+        // Return user data including vote preferences
+        return Response.json(
+          {
+            username: user.username,
+            name: user.name,
+            liberated: true,
+            vote: user.vote,
+            authorizedAt: user.authorizedAt,
+            updatedAt: user.updatedAt,
+          },
+          { status: 200 },
+        );
       } else {
-        return new Response("Unauthorized", { status: 401 });
+        return new Response("User has not authorized data liberation", {
+          status: 403,
+        });
       }
     }
 
@@ -125,7 +186,30 @@ export default {
   },
 };
 
-function getDashboardHTML(user: any, isLiberated: boolean): string {
+function getDashboardHTML(
+  user: any,
+  isLiberated: boolean,
+  userData: any,
+): string {
+  const voteInfo = userData?.vote
+    ? `
+    <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-6">
+      <h4 class="font-bold text-blue-300 mb-2">Your Vote:</h4>
+      <ul class="text-sm text-blue-200 space-y-1">
+        ${userData.vote.choices
+          .map((choice: string) => `<li>• ${formatVoteChoice(choice)}</li>`)
+          .join("")}
+      </ul>
+      <p class="text-xs text-blue-300 mt-2">Authorized scopes: ${userData.vote.scopes.join(
+        ", ",
+      )}</p>
+      <p class="text-xs text-blue-300">Vote cast: ${new Date(
+        userData.vote.timestamp,
+      ).toLocaleString()}</p>
+    </div>
+  `
+    : "";
+
   return `
 <!DOCTYPE html>
 <html lang="en" class="bg-black">
@@ -163,31 +247,33 @@ function getDashboardHTML(user: any, isLiberated: boolean): string {
                 </div>
             </div>
             
+            ${voteInfo}
+            
             ${
               isLiberated
                 ? `
                 <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-6 mb-6">
                     <h3 class="text-xl font-bold text-green-400 mb-2">🎉 Your Data is Liberated!</h3>
-                    <p class="text-gray-300 mb-4">Third-party applications can check your liberation status.</p>
+                    <p class="text-gray-300 mb-4">Third-party applications can check your liberation status and access your data according to your vote preferences.</p>
                     <button onclick="toggleLiberation()" 
                             class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-full font-bold transition-all">
-                        Lock Data Again
+                        Revoke Liberation
                     </button>
                 </div>
                 
                 <div class="bg-gray-800/50 rounded-lg p-4">
                     <h4 class="font-bold mb-2">Check Status Endpoint</h4>
                     <code class="text-sm text-green-400">GET /${user.username}</code>
-                    <p class="text-sm text-gray-400 mt-2">Returns 200 OK if liberated, 401 if locked, 404 if not found</p>
+                    <p class="text-sm text-gray-400 mt-2">Returns user data with vote preferences if liberated, 403 if locked, 404 if not found</p>
                 </div>
             `
                 : `
                 <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-6 mb-6">
                     <h3 class="text-xl font-bold text-red-400 mb-2">🔒 Your Data is Locked</h3>
-                    <p class="text-gray-300 mb-4">Approve data liberation to allow third-party status checks.</p>
+                    <p class="text-gray-300 mb-4">Re-enable data liberation to allow third-party status checks according to your vote.</p>
                     <button onclick="toggleLiberation()" 
                             class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full font-bold transition-all">
-                        Liberate My Data
+                        Re-Enable Liberation
                     </button>
                 </div>
             `
@@ -211,7 +297,6 @@ function getDashboardHTML(user: any, isLiberated: boolean): string {
                 const result = await response.json();
                 
                 if (result.success) {
-                    // alert(result.message + ' Reloading page...');
                     window.location.reload();
                 } else {
                     alert('Failed to toggle liberation: ' + result.error);
@@ -223,4 +308,17 @@ function getDashboardHTML(user: any, isLiberated: boolean): string {
     </script>
 </body>
 </html>`;
+}
+
+function formatVoteChoice(choice: string): string {
+  const choices = {
+    allow_x_ai: "Allow X to train AI models with my data",
+    allow_third_party_ai: "Allow third-party companies to train AI models",
+    controlled_access: "I want full control over data access",
+    public_domain_all: "Make my posts public domain for all",
+    public_domain_individuals: "Make my posts available to individuals only",
+    allow_follows_access: "Allow access to my following/followers data",
+  };
+
+  return choices[choice as keyof typeof choices] || choice;
 }
