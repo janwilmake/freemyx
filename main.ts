@@ -1,4 +1,4 @@
-import { middleware, Env as XAuthEnv } from "smootherauth-x";
+import { middleware, Env as XAuthEnv } from "./simplerauth-x-middleware";
 
 export interface Env extends XAuthEnv {
   APPROVED_USERS: KVNamespace;
