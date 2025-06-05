@@ -102,7 +102,12 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.4), transparent);
             animation: sweep 3s infinite;
+            pointer-events: none;
+            /* Already there but important */
+            z-index: -1;
+            /* Move behind content */
         }
+
 
         @keyframes sweep {
             0% {
@@ -163,6 +168,7 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             border-radius: 0 8px 8px 0;
         }
 
+
         .poll-option {
             background: rgba(34, 197, 94, 0.05);
             border: 1px solid rgba(34, 197, 94, 0.2);
@@ -171,7 +177,38 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             margin-bottom: 0.75rem;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            /* Ensure proper stacking */
+            z-index: 1;
+            /* Above the animation */
         }
+
+        .poll-option label {
+            cursor: pointer;
+            color: #d1d5db;
+            font-weight: 500;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            position: relative;
+            /* Ensure proper stacking */
+            z-index: 2;
+            /* Above everything */
+        }
+
+        .poll-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #22c55e;
+            margin-right: 12px;
+            position: relative;
+            /* Ensure proper stacking */
+            z-index: 3;
+            /* Highest priority */
+        }
+
+
 
         .poll-option:hover {
             background: rgba(34, 197, 94, 0.1);
@@ -617,7 +654,6 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             </div>
         </div>
     </main>
-
     <script>
         // Handle poll form submission
         document.getElementById('data-usage-poll').addEventListener('submit', function (e) {
@@ -651,30 +687,43 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             });
         });
 
-        // Handle poll option click (toggle checkbox)
+        // Make entire poll option clickable with high priority event capture
         document.querySelectorAll('.poll-option').forEach(option => {
+            // Use capture phase to ensure we get the event first
             option.addEventListener('click', function (e) {
-                // Don't trigger if clicking on input or label directly
-                if (e.target.type === 'checkbox' || e.target.tagName === 'LABEL') {
-                    return;
-                }
+                e.stopPropagation(); // Prevent any interference
 
                 const checkbox = this.querySelector('input[type="checkbox"]');
+
+                // Always toggle the checkbox regardless of what was clicked
                 checkbox.checked = !checkbox.checked;
-                checkbox.dispatchEvent(new Event('change'));
+
+                // Trigger change event
+                checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+            }, true); // Use capture phase
+
+            // Also add a mousedown event as backup
+            option.addEventListener('mousedown', function (e) {
+                e.preventDefault(); // Prevent any selection or focus issues
             });
         });
 
-        // Make label clicks work properly
+        // Prevent any label interference
         document.querySelectorAll('.poll-option label').forEach(label => {
             label.addEventListener('click', function (e) {
-                e.preventDefault();
-                const checkbox = this.querySelector('input[type="checkbox"]');
-                checkbox.checked = !checkbox.checked;
-                checkbox.dispatchEvent(new Event('change'));
+                e.preventDefault(); // Prevent double-toggling
+                e.stopPropagation(); // Stop event bubbling
+            });
+        });
+
+        // Make sure checkboxes don't interfere with container clicks
+        document.querySelectorAll('.poll-option input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('click', function (e) {
+                e.stopPropagation(); // Prevent container click handler
             });
         });
     </script>
+
 </body>
 
 </html>
