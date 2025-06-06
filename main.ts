@@ -39,6 +39,18 @@ export default {
     const authResponse = await middleware(request, env, ctx);
     if (authResponse) return authResponse;
 
+    // CORS headers
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    };
+
+    // Handle OPTIONS request for CORS
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
+
     const url = new URL(request.url);
 
     // List all liberated users endpoint
@@ -78,6 +90,7 @@ export default {
               "Access-Control-Allow-Origin": "*", // Allow cross-origin requests
               "Access-Control-Allow-Methods": "GET",
               "Access-Control-Allow-Headers": "Content-Type",
+              ...corsHeaders,
             },
           },
         );
@@ -188,7 +201,7 @@ export default {
 
           return new Response(JSON.stringify(responseData, undefined, 2), {
             status: 200,
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json", ...corsHeaders },
           });
         } else {
           return new Response(
@@ -197,7 +210,10 @@ export default {
               undefined,
               2,
             ),
-            { status: 403 },
+            {
+              status: 403,
+              headers: { "content-type": "application/json", ...corsHeaders },
+            },
           );
         }
       } catch (error) {
@@ -209,7 +225,10 @@ export default {
     // Default route - 404
     return new Response(
       JSON.stringify({ error: "User not found" }, undefined, 2),
-      { status: 404 },
+      {
+        status: 404,
+        headers: { "content-type": "application/json", ...corsHeaders },
+      },
     );
   },
 };
