@@ -103,11 +103,8 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.4), transparent);
             animation: sweep 3s infinite;
             pointer-events: none;
-            /* Already there but important */
             z-index: -1;
-            /* Move behind content */
         }
-
 
         @keyframes sweep {
             0% {
@@ -168,6 +165,30 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             border-radius: 0 8px 8px 0;
         }
 
+        .poll-section {
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .poll-section h3 {
+            color: #86efac;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .data-info {
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            color: #d1d5db;
+            font-size: 0.9rem;
+        }
 
         .poll-option {
             background: rgba(34, 197, 94, 0.05);
@@ -178,9 +199,7 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
-            /* Ensure proper stacking */
             z-index: 1;
-            /* Above the animation */
         }
 
         .poll-option label {
@@ -192,44 +211,22 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             align-items: flex-start;
             width: 100%;
             position: relative;
-            /* Ensure proper stacking */
             z-index: 2;
-            /* Above everything */
         }
 
+        .poll-option input[type="radio"],
         .poll-option input[type="checkbox"] {
             width: 18px;
             height: 18px;
             accent-color: #22c55e;
             margin-right: 12px;
             position: relative;
-            /* Ensure proper stacking */
             z-index: 3;
-            /* Highest priority */
         }
-
-
 
         .poll-option:hover {
             background: rgba(34, 197, 94, 0.1);
             border-color: rgba(34, 197, 94, 0.4);
-        }
-
-        .poll-option input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #22c55e;
-            margin-right: 12px;
-        }
-
-        .poll-option label {
-            cursor: pointer;
-            color: #d1d5db;
-            font-weight: 500;
-            line-height: 1.5;
-            display: flex;
-            align-items: flex-start;
-            width: 100%;
         }
 
         .poll-option.checked {
@@ -239,6 +236,22 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
 
         .poll-option.checked label {
             color: #86efac;
+        }
+
+        .poll-option.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .refinement-section {
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid rgba(34, 197, 94, 0.3);
+            display: none;
+        }
+
+        .refinement-section.active {
+            display: block;
         }
     </style>
 </head>
@@ -341,47 +354,62 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
                 </div>
 
                 <form id="data-usage-poll" class="max-w-3xl mx-auto">
-                    <div class="space-y-4 mb-8">
+                    <!-- What Data Section -->
+                    <div class="poll-section">
+                        <h3>What Data Will Be Shared?</h3>
+                        <div class="data-info">
+                            <strong>All your X data:</strong> Posts, replies, network (follows/followers), and
+                            engagement metrics.
+                            This comprehensive approach ensures maximum utility while maintaining simplicity.
+                        </div>
+                    </div>
+
+                    <!-- For Who Section -->
+                    <div class="poll-section">
+                        <h3>Who Can Access Your Data?</h3>
+
                         <div class="poll-option">
                             <label>
-                                <input type="checkbox" name="choices" value="allow_x_ai">
-                                <span>Allow X to train their AI models with my data</span>
+                                <input type="radio" name="access_level" value="1">
+                                <span><strong>Fully Public Domain</strong> - Anyone can access and use my data
+                                    freely</span>
                             </label>
                         </div>
 
                         <div class="poll-option">
                             <label>
-                                <input type="checkbox" name="choices" value="allow_third_party_ai">
-                                <span>Allow third-party companies to train AI models with my data</span>
+                                <input type="radio" name="access_level" value="custom">
+                                <span><strong>Custom Access</strong> - Let me choose who can access my data</span>
                             </label>
                         </div>
 
-                        <div class="poll-option">
-                            <label>
-                                <input type="checkbox" name="choices" value="controlled_access">
-                                <span>I want full control over which third parties may access my data</span>
-                            </label>
-                        </div>
+                        <!-- Refinement Options -->
+                        <div id="refinement-section" class="refinement-section">
+                            <h4 class="text-lg font-semibold mb-3 text-green-400">Select who can access your data:</h4>
 
-                        <div class="poll-option">
-                            <label>
-                                <input type="checkbox" name="choices" value="public_domain_all">
-                                <span>Make my public X posts truly public domain for anyone</span>
-                            </label>
-                        </div>
+                            <div class="poll-option">
+                                <label>
+                                    <input type="checkbox" name="custom_access" value="2">
+                                    <span><strong>Me</strong> - I can access my own data through third-party
+                                        tools</span>
+                                </label>
+                            </div>
 
-                        <div class="poll-option">
-                            <label>
-                                <input type="checkbox" name="choices" value="public_domain_individuals">
-                                <span>Make my public X posts available to individuals only, not companies</span>
-                            </label>
-                        </div>
+                            <div class="poll-option">
+                                <label>
+                                    <input type="checkbox" name="custom_access" value="3">
+                                    <span><strong>People I Follow</strong> - My network can access my data for mutual
+                                        benefit</span>
+                                </label>
+                            </div>
 
-                        <div class="poll-option">
-                            <label>
-                                <input type="checkbox" name="choices" value="allow_follows_access">
-                                <span>Allow access to my following/followers for network analysis</span>
-                            </label>
+                            <div class="poll-option">
+                                <label>
+                                    <input type="checkbox" name="custom_access" value="4">
+                                    <span><strong>Science & Research</strong> - Academic and non-profit research
+                                        organizations</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -414,6 +442,7 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             </div>
         </div>
 
+        <!-- Rest of the content sections remain the same -->
         <!-- Detailed Content Section -->
         <div class="max-w-6xl mx-auto px-4 py-16">
             <div class="content-section">
@@ -654,29 +683,44 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             </div>
         </div>
     </main>
+
     <script>
-        // Handle poll form submission
-        document.getElementById('data-usage-poll').addEventListener('submit', function (e) {
-            e.preventDefault();
+        // Handle radio button changes for access level
+        document.querySelectorAll('input[name="access_level"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const refinementSection = document.getElementById('refinement-section');
+                const customOptions = document.querySelectorAll('input[name="custom_access"]');
 
-            // Get all checked checkboxes
-            const checkedBoxes = document.querySelectorAll('input[name="choices"]:checked');
-            const choices = Array.from(checkedBoxes).map(cb => cb.value);
+                if (this.value === 'custom') {
+                    refinementSection.classList.add('active');
+                    // Enable custom checkboxes
+                    customOptions.forEach(checkbox => {
+                        checkbox.disabled = false;
+                        checkbox.closest('.poll-option').classList.remove('disabled');
+                    });
+                } else {
+                    refinementSection.classList.remove('active');
+                    // Disable and uncheck custom checkboxes
+                    customOptions.forEach(checkbox => {
+                        checkbox.disabled = true;
+                        checkbox.checked = false;
+                        checkbox.closest('.poll-option').classList.remove('checked');
+                        checkbox.closest('.poll-option').classList.add('disabled');
+                    });
+                }
 
-            if (choices.length === 0) {
-                alert('Please select at least one option to proceed.');
-                return;
-            }
-
-            // Create query string with vote choices
-            const queryString = `?vote=${choices.join(',')}`;
-
-            // Navigate to login with vote choices
-            window.location.href = '/login' + queryString;
+                // Update visual state
+                this.closest('.poll-option').classList.add('checked');
+                document.querySelectorAll('input[name="access_level"]').forEach(other => {
+                    if (other !== this) {
+                        other.closest('.poll-option').classList.remove('checked');
+                    }
+                });
+            });
         });
 
-        // Handle checkbox visual feedback
-        document.querySelectorAll('.poll-option input[type="checkbox"]').forEach(checkbox => {
+        // Handle checkbox visual feedback for custom access
+        document.querySelectorAll('input[name="custom_access"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
                 const pollOption = this.closest('.poll-option');
                 if (this.checked) {
@@ -687,39 +731,69 @@ https://lmpify.com/previous-prompt-ht-jjwjwn0
             });
         });
 
-        // Make entire poll option clickable with high priority event capture
-        document.querySelectorAll('.poll-option').forEach(option => {
-            // Use capture phase to ensure we get the event first
-            option.addEventListener('click', function (e) {
-                e.stopPropagation(); // Prevent any interference
+        // Handle poll form submission
+        document.getElementById('data-usage-poll').addEventListener('submit', function (e) {
+            e.preventDefault();
 
+            const accessLevel = document.querySelector('input[name="access_level"]:checked');
+
+            if (!accessLevel) {
+                alert('Please select an access level to proceed.');
+                return;
+            }
+
+            let choices = [];
+
+            if (accessLevel.value === '1') {
+                // Fully public domain
+                choices = ['1'];
+            } else if (accessLevel.value === 'custom') {
+                // Get selected custom access options
+                const customChecked = document.querySelectorAll('input[name="custom_access"]:checked');
+                if (customChecked.length === 0) {
+                    alert('Please select at least one custom access option.');
+                    return;
+                }
+                choices = Array.from(customChecked).map(cb => cb.value);
+            }
+
+            // Create query string with vote choices
+            const queryString = `?vote=${choices.join(',')}`;
+
+            // Navigate to login with vote choices
+            window.location.href = '/login' + queryString;
+        });
+
+        // Make poll options clickable
+        document.querySelectorAll('.poll-option').forEach(option => {
+            option.addEventListener('click', function (e) {
+                e.stopPropagation();
+
+                const radio = this.querySelector('input[type="radio"]');
                 const checkbox = this.querySelector('input[type="checkbox"]');
 
-                // Always toggle the checkbox regardless of what was clicked
-                checkbox.checked = !checkbox.checked;
-
-                // Trigger change event
-                checkbox.dispatchEvent(new Event('change', { bubbles: true }));
-            }, true); // Use capture phase
-
-            // Also add a mousedown event as backup
-            option.addEventListener('mousedown', function (e) {
-                e.preventDefault(); // Prevent any selection or focus issues
-            });
+                if (radio && !radio.disabled) {
+                    radio.checked = true;
+                    radio.dispatchEvent(new Event('change', { bubbles: true }));
+                } else if (checkbox && !checkbox.disabled) {
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }, true);
         });
 
-        // Prevent any label interference
+        // Prevent label interference
         document.querySelectorAll('.poll-option label').forEach(label => {
             label.addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent double-toggling
-                e.stopPropagation(); // Stop event bubbling
+                e.preventDefault();
+                e.stopPropagation();
             });
         });
 
-        // Make sure checkboxes don't interfere with container clicks
-        document.querySelectorAll('.poll-option input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('click', function (e) {
-                e.stopPropagation(); // Prevent container click handler
+        // Prevent input interference with container clicks
+        document.querySelectorAll('.poll-option input').forEach(input => {
+            input.addEventListener('click', function (e) {
+                e.stopPropagation();
             });
         });
     </script>
