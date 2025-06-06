@@ -167,12 +167,15 @@ export default {
 
     // Username check route - /{username}
     if (url.pathname.length > 1 && !url.pathname.includes(".")) {
-      const username = url.pathname.slice(1); // Remove leading slash
+      const username = url.pathname.slice(1).toLowerCase(); // Remove leading slash
 
       try {
         const client = getDBClient(env, ctx);
         const user = await client
-          .exec<UserData>("SELECT * FROM users WHERE username = ?", username)
+          .exec<UserData>(
+            "SELECT * FROM users WHERE LOWER(username) = ?",
+            username,
+          )
           .one()
           .catch(() => null);
 

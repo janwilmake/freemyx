@@ -10,6 +10,6 @@ Features:
 
 App and tool developers can use 'Free My X' as part of their onboarding flow to ensure the user data can be gathered with conscent.
 
-[![](https://b.lmpify.com/Example)](https://lmpify.com/httpsuuithubcom-39l3cy0)
+[![](https://b.lmpify.com/Example)](https://lmpify.com/httpsuuithubcom-w760l50)
 
 See live in action [here](https://freemyx.com/example)
