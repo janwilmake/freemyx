@@ -37,8 +37,8 @@ export interface UserData extends Records {
   profile_image_url?: string;
   public_metrics?: string; // JSON string
   liberated: number; // SQLite boolean (0/1)
-  vote_choices?: string; // JSON string
-  vote_scopes?: string; // JSON string
+  vote_choices?: string; // Comma-separated string
+  vote_scopes?: string; // Space-separated string (OAuth format)
   vote_timestamp?: string;
   authorized_at: string;
   updated_at: string;
@@ -75,10 +75,10 @@ const userSchema: TableSchema = {
       "x-dorm-index": true, // Index for faster queries
     },
     vote_choices: {
-      type: "string", // JSON
+      type: "string", // Comma-separated
     },
     vote_scopes: {
-      type: "string", // JSON
+      type: "string", // Space-separated OAuth format
     },
     vote_timestamp: {
       type: "string",
@@ -127,12 +127,12 @@ async function generateCodeChallenge(codeVerifier: string): Promise<string> {
   return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-function determineScopesFromVote(voteChoices: string[]): string[] {
+function determineScopesFromVote(voteChoices: string[]): string {
   const baseScopes = ["users.read", "offline.access"]; // Always required
 
   // If vote is "1" (fully public domain) or contains any choices, we need all scopes
   if (voteChoices.includes("1") || voteChoices.length > 0) {
-    return [
+    const allScopes = [
       ...baseScopes,
       "tweet.read", // Read posts/tweets
       "follows.read", // Read follows/followers
@@ -142,16 +142,17 @@ function determineScopesFromVote(voteChoices: string[]): string[] {
       // "mute.read", // Read muted accounts
       // "bookmark.read", // Read bookmarks
     ];
+    return allScopes.join(" ");
   }
 
   // If no vote choices (shouldn't happen from the form, but fallback)
-  return baseScopes;
+  return baseScopes.join(" ");
 }
 
 function getDBClient(env: Env, ctx: ExecutionContext): DORMClient {
   return createClient({
     doNamespace: env.DORM_NAMESPACE,
-    version: "v1",
+    version: "v2",
     migrations,
     ctx: ctx,
     name: "users_db",
@@ -193,19 +194,7 @@ export async function getUser(
       return null;
     }
 
-    // Parse JSON fields
-    const userData: UserData = {
-      ...user,
-      public_metrics: user.public_metrics
-        ? JSON.parse(user.public_metrics)
-        : undefined,
-      vote_choices: user.vote_choices
-        ? JSON.parse(user.vote_choices)
-        : undefined,
-      vote_scopes: user.vote_scopes ? JSON.parse(user.vote_scopes) : undefined,
-    };
-
-    return userData;
+    return user;
   } catch (error) {
     console.error("Error retrieving user from DORM:", error);
     return null;
@@ -238,11 +227,10 @@ export const middleware = async (
     const voteChoices = voteParam ? voteParam.split(",") : [];
 
     // Determine OAuth scopes based on vote choices
-    const requiredScopes = determineScopesFromVote(voteChoices);
-    const scopeString = requiredScopes.join(" ");
+    const scopeString = determineScopesFromVote(voteChoices);
 
     console.log("Vote choices:", voteChoices);
-    console.log("Required scopes:", requiredScopes);
+    console.log("Required scopes:", scopeString);
 
     const state = await generateRandomString(16);
     const codeVerifier = await generateRandomString(43);
@@ -271,8 +259,8 @@ export const middleware = async (
     // Store vote data if provided
     if (voteChoices.length > 0) {
       const voteData = {
-        choices: voteChoices,
-        scopes: requiredScopes,
+        choices: voteChoices.join(","), // Store as comma-separated string
+        scopes: scopeString, // Store as space-separated string
         timestamp: new Date().toISOString(),
       };
       headers.append(
@@ -420,8 +408,8 @@ export const middleware = async (
           ? JSON.stringify(xUser.public_metrics)
           : undefined,
         liberated: 1, // Auto-liberate when they authorize
-        vote_choices: voteData ? JSON.stringify(voteData.choices) : undefined,
-        vote_scopes: voteData ? JSON.stringify(voteData.scopes) : undefined,
+        vote_choices: voteData ? voteData.choices : undefined, // Already comma-separated string
+        vote_scopes: voteData ? voteData.scopes : undefined, // Already space-separated string
         vote_timestamp: voteData ? voteData.timestamp : undefined,
         authorized_at: now,
         updated_at: now,

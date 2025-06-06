@@ -22,7 +22,7 @@ export interface Env extends XAuthEnv {
 function getDBClient(env: Env, ctx: ExecutionContext): DORMClient {
   return createClient({
     doNamespace: env.DORM_NAMESPACE,
-    version: "v1",
+    version: "v2",
     migrations,
     ctx: ctx,
     name: "users_db",
@@ -51,28 +51,12 @@ export default {
           )
           .toArray();
 
-        // Transform the data to include parsed vote information and exclude sensitive data
-        const publicUserList = liberatedUsers.map((user) => ({
-          username: user.username,
-          name: user.name,
-          profileImageUrl: user.profile_image_url,
-          vote: user.vote_choices
-            ? {
-                choices: JSON.parse(user.vote_choices),
-                scopes: user.vote_scopes ? JSON.parse(user.vote_scopes) : [],
-                timestamp: user.vote_timestamp,
-              }
-            : undefined,
-          authorizedAt: user.authorized_at,
-          updatedAt: user.updated_at,
-        }));
-
         return new Response(
           JSON.stringify(
             {
-              count: publicUserList.length,
-              users: publicUserList,
+              count: liberatedUsers.length,
               lastUpdated: new Date().toISOString(),
+              users: liberatedUsers,
             },
             undefined,
             2,
@@ -175,15 +159,15 @@ export default {
         }
 
         if (user.liberated) {
-          // Parse JSON fields and return user data including vote preferences
+          // Return user data including vote preferences
           const responseData = {
             username: user.username,
             name: user.name,
             liberated: true,
             vote: user.vote_choices
               ? {
-                  choices: JSON.parse(user.vote_choices),
-                  scopes: user.vote_scopes ? JSON.parse(user.vote_scopes) : [],
+                  choices: user.vote_choices.split(","), // Parse comma-separated string
+                  scopes: user.vote_scopes, // Keep as space-separated string
                   timestamp: user.vote_timestamp,
                 }
               : undefined,
@@ -224,16 +208,15 @@ function getDashboardHTML(user: UserData): string {
         <div class="bg-blue-800/30 p-3 rounded">
           <p class="font-medium text-blue-100">Who Can Access:</p>
           <ul class="mt-1 space-y-1">
-            ${JSON.parse(user.vote_choices)
+            ${user.vote_choices
+              .split(",")
               .map((choice: string) => `<li>• ${formatVoteChoice(choice)}</li>`)
               .join("")}
           </ul>
         </div>
       </div>
       <div class="mt-3 text-xs text-blue-300 space-y-1">
-        <p>Authorized X scopes: ${
-          user.vote_scopes ? JSON.parse(user.vote_scopes).join(", ") : "N/A"
-        }</p>
+        <p>Authorized X scopes: ${user.vote_scopes || "N/A"}</p>
         <p>Vote cast: ${
           user.vote_timestamp
             ? new Date(user.vote_timestamp).toLocaleString()
@@ -256,6 +239,9 @@ function getDashboardHTML(user: UserData): string {
         body { font-family: "Inter", sans-serif; }
         .liberation-gradient { background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%); }
         .free-border { border: 1px solid rgba(34, 197, 94, 0.3); }
+        .button-glow:hover {
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+        }
     </style>
 </head>
 <body class="text-white liberation-gradient min-h-screen">
@@ -263,7 +249,7 @@ function getDashboardHTML(user: UserData): string {
         <div class="text-center mb-12">
             <img src="${
               user.profile_image_url || "/default-avatar.png"
-            }" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-4">
+            }" alt="Profile" class="w-8 h-8 rounded-full mx-auto mb-4">
             <h1 class="text-4xl font-bold mb-2">${user.name}</h1>
             <p class="text-xl text-gray-400">@${user.username}</p>
         </div>
@@ -289,10 +275,37 @@ function getDashboardHTML(user: UserData): string {
                 <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-6 mb-6">
                     <h3 class="text-xl font-bold text-green-400 mb-2">🎉 Your Data is Liberated!</h3>
                     <p class="text-gray-300 mb-4">Third-party applications can check your liberation status and access your X data according to your vote preferences.</p>
-                    <button onclick="toggleLiberation()" 
-                            class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-full font-bold transition-all">
-                        Revoke Liberation
-                    </button>
+                    
+                    <div class="flex flex-wrap gap-3 mb-4">
+                        <button onclick="toggleLiberation()" 
+                                class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-full font-bold transition-all">
+                            Revoke Liberation
+                        </button>
+                        <button onclick="shareOnX()" 
+                                class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-full font-bold transition-all button-glow flex items-center gap-2">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            Tweet #freemyx
+                        </button>
+                        <a href="https://donate.stripe.com/bJe6oG4by8tb0eT6XDeNh3E" 
+                           target="_blank"
+                           class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full font-bold transition-all button-glow flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                            Support Movement
+                        </a>
+                    </div>
+                    
+                    <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                        <h4 class="font-bold text-green-300 mb-2">Help the Data Liberation Movement:</h4>
+                        <ul class="text-sm text-green-200 space-y-2">
+                            <li>• <strong>Share:</strong> Tweet about data liberation with #freemyx hashtag</li>
+                            <li>• <strong>Support:</strong> Donate to fund development of liberation tools</li>
+                            <li>• <strong>Spread:</strong> Tell others about the importance of data rights</li>
+                        </ul>
+                    </div>
                 </div>
                 
                 <div class="bg-gray-800/50 rounded-lg p-4">
@@ -312,7 +325,7 @@ function getDashboardHTML(user: UserData): string {
   "username": "${user.username}",
   "name": "${user.name}",
   "liberated": true,
-  "vote": { choices: [...], scopes: [...] },
+  "vote": { choices: [...], scopes: "..." },
   "authorizedAt": "...",
   "updatedAt": "..."
 }</pre>
@@ -357,6 +370,13 @@ function getDashboardHTML(user: UserData): string {
             } catch (error) {
                 alert('Error: ' + error.message);
             }
+        }
+
+        function shareOnX() {
+            const tweetText = encodeURIComponent("I voted to liberate my X data with #freemyx! Taking control of my digital footprint and joining the data liberation movement. Your data, your rights. 🔓");
+            const url = encodeURIComponent("https://freemyx.com");
+            const tweetUrl = \`https://twitter.com/intent/tweet?text=\${tweetText}&url=\${url}\`;
+            window.open(tweetUrl, '_blank', 'width=550,height=420');
         }
     </script>
 </body>
