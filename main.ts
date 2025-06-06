@@ -47,7 +47,7 @@ export default {
         const client = getDBClient(env, ctx);
         const liberatedUsers = await client
           .exec<UserData>(
-            "SELECT username, name, profile_image_url, vote_choices, vote_scopes, vote_timestamp, authorized_at, updated_at FROM users WHERE liberated = 1 ORDER BY updated_at DESC",
+            "SELECT user_id, username, name, profile_image_url, vote_choices, vote_scopes, vote_timestamp, authorized_at, updated_at FROM users WHERE liberated = 1 ORDER BY updated_at DESC",
           )
           .toArray();
 
@@ -56,7 +56,16 @@ export default {
             {
               count: liberatedUsers.length,
               lastUpdated: new Date().toISOString(),
-              users: liberatedUsers,
+              users: liberatedUsers.map((item) => {
+                const isPublic = item.vote_choices?.includes("1");
+                return {
+                  ...item,
+                  public: isPublic,
+                  me: isPublic || item.vote_choices?.includes("2"),
+                  follows: isPublic || item.vote_choices?.includes("3"),
+                  science: isPublic || item.vote_choices?.includes("4"),
+                };
+              }),
             },
             undefined,
             2,
@@ -159,20 +168,22 @@ export default {
         }
 
         if (user.liberated) {
+          const isPublic = user.vote_choices?.includes("1");
           // Return user data including vote preferences
           const responseData = {
+            user_id: user.user_id,
             username: user.username,
             name: user.name,
             liberated: true,
-            vote: user.vote_choices
-              ? {
-                  choices: user.vote_choices.split(","), // Parse comma-separated string
-                  scopes: user.vote_scopes, // Keep as space-separated string
-                  timestamp: user.vote_timestamp,
-                }
-              : undefined,
-            authorizedAt: user.authorized_at,
-            updatedAt: user.updated_at,
+            vote_choices: user.vote_choices, // Parse comma-separated string
+            vote_scopes: user.vote_scopes, // Keep as space-separated string
+            vote_timestamp: user.vote_timestamp,
+            authorized_at: user.authorized_at,
+            updated_at: user.updated_at,
+            public: isPublic,
+            me: isPublic || user.vote_choices?.includes("2"),
+            follows: isPublic || user.vote_choices?.includes("3"),
+            science: isPublic || user.vote_choices?.includes("4"),
           };
 
           return new Response(JSON.stringify(responseData, undefined, 2), {
@@ -180,9 +191,14 @@ export default {
             headers: { "content-type": "application/json" },
           });
         } else {
-          return new Response("User has not authorized data liberation", {
-            status: 403,
-          });
+          return new Response(
+            JSON.stringify(
+              { error: "User has not authorized data liberation" },
+              undefined,
+              2,
+            ),
+            { status: 403 },
+          );
         }
       } catch (error) {
         console.error("Username lookup error:", error);
@@ -191,7 +207,10 @@ export default {
     }
 
     // Default route - 404
-    return new Response("Not found", { status: 404 });
+    return new Response(
+      JSON.stringify({ error: "User not found" }, undefined, 2),
+      { status: 404 },
+    );
   },
 };
 
@@ -325,9 +344,7 @@ function getDashboardHTML(user: UserData): string {
   "username": "${user.username}",
   "name": "${user.name}",
   "liberated": true,
-  "vote": { choices: [...], scopes: "..." },
-  "authorizedAt": "...",
-  "updatedAt": "..."
+  ...
 }</pre>
                         </div>
                     </div>
