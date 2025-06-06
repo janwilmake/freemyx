@@ -1,4 +1,4 @@
-TODO
+# Initial version: 6th of June 2025
 
 - ✅ Fix current redirect bug. identify issue, ensure that never happens (maybe need basic plan, but may be able to do this infinite in different way)
 - ✅ Add scientists as group. Make form more fine-grained. Public domain is FULLY LIBERATED. Can't do anything with controlled data provision for now
@@ -8,4 +8,3 @@ TODO
   - ✅ donate to support the 'data liberation movement'
 - ✅ json readability
 - ✅ Get back to feedback in `#data-policy`
-- If some of them liberate, figure out if I can share this online or if there's a better strategy.
