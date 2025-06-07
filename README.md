@@ -48,6 +48,4 @@ The response includes boolean flags for access levels:
 - `follows`: People they follow can access (public OR vote choice "3")
 - `science`: Research organizations can access (public OR vote choice "4")
 
-[![](https://b.lmpify.com/Example)](https://lmpify.com/httpsuuithubcom-w760l50)
-
-See live in action [here](https://freemyx.com/example)
+Additionally, you can pass `?redirect_url={URL}` to show a button to navigate back to your website after the user has authorized their data on 'Free My X'.
