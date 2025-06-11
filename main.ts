@@ -10,6 +10,7 @@ import {
   UserData,
   DORM,
   migrations,
+  generateRandomString,
 } from "./simplerauth-x-middleware";
 import { createClient, DORMClient } from "dormroom"; // Adjust import path as needed
 
@@ -41,7 +42,7 @@ export default {
     if (authResponse) return authResponse;
 
     const client = getDBClient(env, ctx);
-    const middlewareResponse = client.middleware(request, {
+    const middlewareResponse = await client.middleware(request, {
       prefix: "/db",
       secret: env.DB_SECRET,
     });
