@@ -17,6 +17,7 @@ export { DORM };
 
 export interface Env extends XAuthEnv {
   DORM_NAMESPACE: DurableObjectNamespace<DORM>;
+  DB_SECRET: string;
 }
 
 function getDBClient(env: Env, ctx: ExecutionContext): DORMClient {
@@ -39,6 +40,15 @@ export default {
     const authResponse = await middleware(request, env, ctx);
     if (authResponse) return authResponse;
 
+    const client = getDBClient(env, ctx);
+    const middlewareResponse = client.middleware(request, {
+      prefix: "/db",
+      secret: env.DB_SECRET,
+    });
+    if (middlewareResponse) {
+      return middlewareResponse;
+    }
+
     // CORS headers
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
@@ -46,17 +56,11 @@ export default {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
 
-    // Handle OPTIONS request for CORS
-    if (request.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders });
-    }
-
     const url = new URL(request.url);
 
     // List all liberated users endpoint
     if (url.pathname === "/list.json") {
       try {
-        const client = getDBClient(env, ctx);
         const liberatedUsers = await client
           .exec<UserData>(
             "SELECT user_id, username, name, profile_image_url, vote_choices, vote_scopes, vote_timestamp, authorized_at, updated_at FROM users WHERE liberated = 1 ORDER BY updated_at DESC",
