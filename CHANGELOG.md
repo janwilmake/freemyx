@@ -18,7 +18,3 @@
 ✅ Make the calculator closed-source for now to prevent twitter from knownig that we use an illegal api.
 
 ✅ Then create a top 10 + cont on the frontpage. This is the social proof that's missing right now.
-
-wall of love (#freemyx) - how though?
-
-Share this with the OMG Discord and ask if they think it's ready for launch. Get the whole OMG community to unlock their data. Try to get a meeting with some of them to demo markdownfeed.
