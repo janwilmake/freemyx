@@ -61,7 +61,8 @@
       const sliderItems = [];
 
       this.users.forEach((user) => {
-        const avatarUrl = user.large_profile_pic_url || user.profile_image_url;
+        const avatarUrl =
+          user.profile_image_url_https || user.profile_image_url;
         const twitterUrl = `https://twitter.com/${user.username}`;
 
         sliderItems.push(`
