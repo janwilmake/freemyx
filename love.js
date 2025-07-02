@@ -38,7 +38,7 @@
 
     render() {
       this.container.innerHTML = `
-                        <div class="title">${this.totalCount.toLocaleString()} people freed their data</div>
+                        <div class="title">${this.totalCount.toLocaleString()} people published their rights</div>
                         <div class="users-slider-container">
                             <div class="users-slider">
                                 ${this.createSliderContent()}

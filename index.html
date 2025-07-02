@@ -2,35 +2,22 @@
 <html lang="en" class="bg-black">
 
 <head>
-    <!-- source:
-https://uithub.com/janwilmake/xytext/tree/main/privacy-and-terms?lines=false
-https://letmeprompt.com/httpsuithubcomj-eq69dn0
-https://letmeprompt.com/previous-prompt-ht-jjwjwn0
-
--->
-    <!-- 100% privacy-first analytics -->
-    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="love.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free My X - Your Data, Your Rights</title>
     <meta name="description"
-        content="Why users should control and profit from their own digital footprints. Take back control of your X data today." />
+        content="Set AI content usage preferences for your X data using the IETF standard. Control how your posts are used for training, search, and inference." />
     <meta name="robots" content="index, follow" />
+
+    <link rel="stylesheet" href="love.css">
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://freemyx.com" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Free My X - Your Data, Your Rights" />
     <meta property="og:description"
-        content="Why users should control and profit from their own digital footprints. Take back control of your X data today." />
+        content="Set AI content usage preferences for your X data using the IETF standard. Control how your posts are used for training, search, and inference." />
     <meta property="og:image" content="https://quickog.com/screenshot/freemyx.com" />
-    <meta property="og:image:alt"
-        content="Take control of your X data. Authorize third-party access and break free from platform lock-in." />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -38,8 +25,7 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
     <meta property="twitter:url" content="https://freemyx.com" />
     <meta name="twitter:title" content="Free My X - Your Data, Your Rights" />
     <meta name="twitter:description"
-        content="Why users should control and profit from their own digital footprints. Take back control of your X data today." />
-    <meta name="twitter:image" content="https://quickog.com/screenshot/freemyx.com" />
+        content="Set AI content usage preferences for your X data using the IETF standard. Control how your posts are used for training, search, and inference." />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -90,309 +76,51 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
             }
         }
 
-        .break-chains {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .break-chains::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.4), transparent);
-            animation: sweep 3s infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        @keyframes sweep {
-            0% {
-                left: -100%;
-            }
-
-            100% {
-                left: 100%;
-            }
-        }
-
-        .content-section {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .content-section h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #22c55e;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            margin-top: 2rem;
-            color: #86efac;
-        }
-
-        .content-section p {
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            color: #d1d5db;
-        }
-
-        .content-section ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        .content-section li {
-            margin-bottom: 0.5rem;
-            color: #d1d5db;
-        }
-
-        .content-section strong {
-            color: #22c55e;
-            font-weight: 600;
-        }
-
-        .highlight-box {
-            background: rgba(34, 197, 94, 0.1);
-            border-left: 4px solid #22c55e;
+        .scope-tree {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: #1a1a2e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
             padding: 1.5rem;
             margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
         }
 
-        .poll-section {
-            background: rgba(34, 197, 94, 0.05);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .poll-section h3 {
-            color: #86efac;
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .data-info {
-            background: rgba(34, 197, 94, 0.08);
-            border: 1px solid rgba(34, 197, 94, 0.25);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            color: #d1d5db;
-            font-size: 0.9rem;
-        }
-
-        .poll-option {
-            background: rgba(34, 197, 94, 0.05);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            z-index: 1;
-        }
-
-        .poll-option label {
-            cursor: pointer;
-            color: #d1d5db;
-            font-weight: 500;
-            line-height: 1.5;
-            display: flex;
-            align-items: flex-start;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
-
-        .poll-option input[type="radio"],
-        .poll-option input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #22c55e;
-            margin-right: 12px;
-            position: relative;
-            z-index: 3;
-        }
-
-        .poll-option:hover {
-            background: rgba(34, 197, 94, 0.1);
-            border-color: rgba(34, 197, 94, 0.4);
-        }
-
-        .poll-option.checked {
-            background: rgba(34, 197, 94, 0.15);
-            border-color: rgba(34, 197, 94, 0.6);
-        }
-
-        .poll-option.checked label {
-            color: #86efac;
-        }
-
-        .poll-option.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .refinement-section {
-            margin-top: 1rem;
+        .scope-node {
+            margin: 0.5rem 0;
             padding-left: 1rem;
-            border-left: 3px solid rgba(34, 197, 94, 0.3);
-            display: none;
         }
 
-        .refinement-section.active {
-            display: block;
+        .scope-name {
+            color: #22c55e;
+            font-weight: bold;
         }
 
-
-
-
-        /* mobilesguff */
-
-        /* Mobile-friendly responsive CSS - Insert this into your existing <style> section */
+        .scope-description {
+            color: #86efac;
+            margin-left: 0.5rem;
+        }
 
         /* Mobile optimizations */
         @media (max-width: 768px) {
 
-            /* Hero section mobile adjustments */
-            .max-w-5xl {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
+            .max-w-5xl,
             .max-w-6xl {
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
 
-            /* Reduce hero padding on mobile */
-            .max-w-5xl.mx-auto.px-4.py-16.md\:py-24 {
-                padding-top: 3rem;
-                padding-bottom: 3rem;
-            }
-
-            /* Giant heading mobile sizing */
             .giant-heading {
                 font-size: clamp(2.5rem, 12vw, 4rem);
                 line-height: 0.9;
                 margin-bottom: 1.5rem;
             }
 
-            /* Large heading mobile sizing */
             .large-heading {
                 font-size: clamp(1.8rem, 8vw, 2.5rem);
                 line-height: 1.1;
                 margin-bottom: 2rem;
             }
 
-            /* Hero subtitle mobile */
-            .text-2xl.md\:text-3xl {
-                font-size: 1.25rem;
-                line-height: 1.4;
-                margin-bottom: 2rem;
-            }
-
-            /* Content sections mobile padding */
-            .content-section {
-                padding: 0 0.5rem;
-            }
-
-            .content-section h2 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-                line-height: 1.3;
-            }
-
-            .content-section h3 {
-                font-size: 1.25rem;
-                margin-bottom: 0.75rem;
-                margin-top: 1.5rem;
-                line-height: 1.3;
-            }
-
-            .content-section p {
-                margin-bottom: 1rem;
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-            .content-section ul {
-                margin-bottom: 1rem;
-                padding-left: 1rem;
-            }
-
-            .content-section ol {
-                padding-left: 1rem;
-            }
-
-            /* Highlight box mobile */
-            .highlight-box {
-                padding: 1rem;
-                margin: 1.5rem 0;
-            }
-
-            .highlight-box p {
-                font-size: 1rem;
-            }
-
-            /* Poll section mobile */
-            .poll-section {
-                padding: 1.5rem;
-                margin-bottom: 1rem;
-            }
-
-            .poll-section h3 {
-                font-size: 1.1rem;
-                margin-bottom: 0.75rem;
-            }
-
-            .data-info {
-                padding: 0.75rem;
-                font-size: 0.85rem;
-                margin-bottom: 1rem;
-            }
-
-            .poll-option {
-                padding: 0.75rem;
-                margin-bottom: 0.5rem;
-            }
-
-            .poll-option label {
-                font-size: 0.9rem;
-                line-height: 1.4;
-            }
-
-            .poll-option input[type="radio"],
-            .poll-option input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                margin-right: 10px;
-                flex-shrink: 0;
-            }
-
-            .refinement-section {
-                padding-left: 0.5rem;
-                margin-top: 0.75rem;
-            }
-
-            .refinement-section h4 {
-                font-size: 1rem;
-                margin-bottom: 0.5rem;
-            }
-
-            /* Card sections mobile */
             .free-border.rounded-xl.p-12 {
                 padding: 2rem 1.5rem;
             }
@@ -401,28 +129,6 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                 padding: 2rem 1.5rem;
             }
 
-            .free-border.rounded-xl.p-8 {
-                padding: 1.5rem;
-            }
-
-            /* Grid layouts mobile */
-            .grid.md\:grid-cols-3 {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            /* Buttons mobile */
-            .bg-green-600.hover\:bg-green-700.px-12.py-4 {
-                padding: 1rem 2rem;
-                font-size: 1rem;
-            }
-
-            .bg-green-600.hover\:bg-green-700.px-12.py-6 {
-                padding: 1rem 2rem;
-                font-size: 1rem;
-            }
-
-            /* Text sizing mobile */
             .text-4xl {
                 font-size: 1.75rem;
                 line-height: 1.2;
@@ -433,138 +139,15 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                 line-height: 1.3;
             }
 
-            .text-2xl {
-                font-size: 1.25rem;
-                line-height: 1.3;
-            }
-
-            .text-xl {
-                font-size: 1.1rem;
-                line-height: 1.4;
-            }
-
-            /* How it works section mobile */
-            .w-16.h-16 {
-                width: 3rem;
-                height: 3rem;
-                margin-bottom: 1rem;
-            }
-
-            /* Footer mobile */
-            .flex.justify-center.gap-6 {
-                flex-wrap: wrap;
-                gap: 1rem;
-                margin-bottom: 1rem;
-            }
-
-            /* Specific mobile adjustments for poll form */
-            #data-usage-poll {
-                max-width: 100%;
-            }
-
-            /* Badge mobile */
-            .inline-flex.items-center.gap-3 {
-                gap: 0.5rem;
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-            }
-
-            /* Value props cards mobile spacing */
-            .free-border.rounded-xl.p-8.hover\:bg-green-500\/5 {
-                padding: 1.25rem;
-            }
-
-            .free-border.rounded-xl.p-8.hover\:bg-green-500\/5 h3 {
-                font-size: 1.25rem;
-                margin-bottom: 0.75rem;
-            }
-
-            .free-border.rounded-xl.p-8.hover\:bg-green-500\/5 p {
-                font-size: 0.9rem;
-            }
-
-            /* SVG icons mobile */
-            .w-12.h-12 {
-                width: 2.5rem;
-                height: 2.5rem;
-            }
-
-            .w-6.h-6 {
-                width: 1.25rem;
-                height: 1.25rem;
-            }
-        }
-
-        /* Small mobile devices */
-        @media (max-width: 480px) {
-            .giant-heading {
-                font-size: 2.25rem;
-                line-height: 0.9;
-            }
-
-            .large-heading {
-                font-size: 1.5rem;
-            }
-
-            .free-border.rounded-xl.p-12,
-            .free-border.rounded-xl.p-10 {
-                padding: 1.5rem 1rem;
-            }
-
-            .poll-section {
-                padding: 1rem;
-            }
-
-            .poll-option {
-                padding: 0.625rem;
-            }
-
-            .content-section {
-                padding: 0 0.25rem;
-            }
-
-            .text-4xl {
-                font-size: 1.5rem;
-            }
-
-            .text-3xl {
-                font-size: 1.375rem;
-            }
-        }
-
-        /* Touch improvements for mobile */
-        @media (max-width: 768px) {
-            .poll-option {
-                min-height: 44px;
-                /* Minimum touch target size */
-                cursor: pointer;
-            }
-
-            .poll-option label {
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-            }
-
-            /* Improve button touch targets */
-            button[type="submit"] {
-                min-height: 48px;
-                touch-action: manipulation;
-            }
-
-            /* Better spacing for touch interactions */
-            .poll-option+.poll-option {
-                margin-top: 0.5rem;
-
+            .grid.md\:grid-cols-3 {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
         }
     </style>
 </head>
 
 <body class="text-white">
-
-
     <script src="love.js"></script>
 
     <main class="min-h-screen liberation-gradient">
@@ -575,7 +158,7 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                     <div
                         class="inline-flex items-center gap-3 bg-green-500/10 px-6 py-3 rounded-full border border-green-500/30 mb-6">
                         <div class="w-2 h-2 bg-green-500 rounded-full liberation-pulse"></div>
-                        <span class="text-green-400 font-medium">Data Liberation Movement</span>
+                        <span class="text-green-400 font-medium">IETF AI Content Preferences</span>
                     </div>
                 </div>
 
@@ -586,301 +169,94 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
 
                 <p
                     class="text-2xl md:text-3xl font-bold mb-10 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                    Why Users Should Control and Profit from Their Own Digital Footprints
+                    Set AI Content Usage Preferences for Your X Data
                 </p>
 
-
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <a href="/authorize?redirect_to=/config"
+                        class="bg-green-600 hover:bg-green-700 px-12 py-4 rounded-full font-bold text-xl transition-all button-glow flex items-center gap-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Configure Preferences
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400">
+                    Based on the IETF AI Content Usage Preferences standard
+                </p>
             </div>
         </div>
 
-        <!-- Story Section -->
+        <!-- IETF Standard Section -->
         <div class="max-w-6xl mx-auto px-4 py-16">
-            <div class="content-section">
-                <div class="mb-16">
-                    <h2 class="large-heading mb-8 text-center">
-                        How AI Companies Get Rich Off Your Thoughts<br>
-                        <span class="text-xl text-gray-400 font-normal">While You're Locked Out of the Value You
-                            Created</span>
-                    </h2>
+            <div class="free-border rounded-xl p-10 mb-20 bg-green-500/5">
+                <h2 class="text-3xl font-bold mb-8 text-center">IETF AI Content Preferences Standard</h2>
 
-                    <div class="highlight-box">
-                        <p class="text-xl font-medium mb-0">
-                            <strong>The Great Data Paradox:</strong> Your thoughts are valuable enough to power
-                            billion-dollar AI companies, but not valuable enough for you to control or profit from.
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-green-400">The Problem</h3>
+                        <p class="text-gray-300 mb-4">
+                            AI companies harvest public content without clear consent or compensation.
+                            Users have no control over how their data is used for training, search, or inference.
                         </p>
                     </div>
-
-                    <p>
-                        Every day, millions of users pour their thoughts, expertise, and creativity onto platforms like
-                        X (formerly Twitter). They share insights about their industries, answer questions, engage in
-                        debates, and collectively build one of the world's largest repositories of human knowledge and
-                        discourse.
-                    </p>
-
-                    <p>
-                        Yet when AI companies harvest this data to train models that power $20/month ChatGPT
-                        subscriptions or enterprise AI tools worth billions, the original creators see none of the
-                        profits.
-                    </p>
-
-                    <p>
-                        Meanwhile, these same users can't easily access, control, or monetize their own contributions.
-                        Want to download your complete X data? You get a limited export. Want to sell access to your own
-                        posts? That might violate the terms of service. Want to create a chatbot trained on your
-                        expertise? You'll need to manually copy-paste years of your own content.
-                    </p>
-
-                    <h3>The Current Broken System</h3>
-                    <p>
-                        Under X's current terms, users retain ownership of their content but grant the platform an
-                        extraordinarily broad license. This license allows X to:
-                    </p>
-                    <ul class="list-disc">
-                        <li>Use your content for training AI models</li>
-                        <li>Share your data with other companies for "improving services"</li>
-                        <li>Distribute your content across any media, now or in the future</li>
-                        <li>Do all of this without paying you a cent</li>
-                    </ul>
-
-                    <p>
-                        The platform then turns around and licenses this data to AI companies in bulk deals worth
-                        millions. Your witty observations about your industry? Your thoughtful threads explaining
-                        complex topics? Your years of accumulated wisdom? All of it becomes training data for models
-                        that charge users monthly subscriptions to access synthesized versions of knowledge you helped
-                        create.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Vote Poll Section -->
-        <div id="poll" class="max-w-5xl mx-auto px-4 py-16">
-            <div
-                class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16 break-chains">
-                <div class="text-center mb-8">
-                    <h2 class="text-4xl font-bold mb-6">Cast Your Vote with Your X Account</h2>
-                    <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-xl">
-                        Take control by choosing exactly how your X data should be used. By voting, you authorize
-                        third-party access according to your choices and join the data liberation movement.
-                    </p>
-                </div>
-
-                <form id="data-usage-poll" class="max-w-3xl mx-auto">
-                    <!-- What Data Section -->
-                    <div class="poll-section">
-                        <h3>What Data Will Be Shared?</h3>
-                        <div class="data-info">
-                            <strong>All your "public" X data:</strong> Posts, replies, network (follows/followers), and
-                            engagement metrics.
-                            This comprehensive approach ensures maximum utility while maintaining simplicity.
-                        </div>
-                    </div>
-
-                    <!-- For Who Section -->
-                    <div class="poll-section">
-                        <h3>Who Can Access Your "Public" Data?</h3>
-
-                        <div class="poll-option">
-                            <label>
-                                <input type="radio" name="access_level" value="1">
-                                <span><strong>Fully Public Domain</strong> - Make my "public" data truly public.</span>
-                            </label>
-                        </div>
-
-                        <div class="poll-option">
-                            <label>
-                                <input type="radio" name="access_level" value="custom">
-                                <span><strong>Custom Access</strong> - Let me choose who can access my data</span>
-                            </label>
-                        </div>
-
-                        <!-- Refinement Options -->
-                        <div id="refinement-section" class="refinement-section">
-                            <h4 class="text-lg font-semibold mb-3 text-green-400">Select who can access your data:</h4>
-
-                            <div class="poll-option">
-                                <label>
-                                    <input type="checkbox" name="custom_access" value="2">
-                                    <span><strong>Me</strong> - I can access my own data through third-party
-                                        tools</span>
-                                </label>
-                            </div>
-
-                            <div class="poll-option">
-                                <label>
-                                    <input type="checkbox" name="custom_access" value="3">
-                                    <span><strong>People I Follow</strong> - My network can access my data for mutual
-                                        benefit</span>
-                                </label>
-                            </div>
-
-                            <div class="poll-option">
-                                <label>
-                                    <input type="checkbox" name="custom_access" value="4">
-                                    <span><strong>Science & Research</strong> - Academic and non-profit research
-                                        organizations</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit"
-                            class="bg-green-600 hover:bg-green-700 px-12 py-4 rounded-full font-bold text-xl transition-all button-glow flex items-center gap-3 mx-auto">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Vote & Authorize with X
-                        </button>
-                        <p class="text-sm text-gray-400 mt-4">
-                            Your vote will be recorded and you'll authorize the requested scopes with your X account
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-green-400">The Solution</h3>
+                        <p class="text-gray-300 mb-4">
+                            The IETF is developing a standard for content usage preferences that lets
+                            creators specify exactly how their content can be used by AI systems.
                         </p>
                     </div>
-                </form>
-
-                <div class="mt-8 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-                    <h3 class="font-bold text-blue-300 mb-2">What happens when you vote:</h3>
-                    <ul class="text-sm text-blue-200 space-y-1">
-                        <li>• Your vote choices are recorded and associated with your X account</li>
-                        <li>• You authorize our service to access your X data according to your selected permissions
-                        </li>
-                        <li>• Third-party applications can check your authorization status and access your data
-                            accordingly</li>
-                        <li>• You can revoke access at any time through your dashboard</li>
-                    </ul>
                 </div>
-            </div>
 
-            <div id="lovewall"></div>
+                <div class="scope-tree">
+                    <div class="text-green-400 font-bold mb-4">IETF Scope Hierarchy:</div>
+                    <div class="scope-node">
+                        <span class="scope-name">tdm</span><span class="scope-description">Text and Data Mining</span>
+                        <div class="scope-node">
+                            <span class="scope-name">ai</span><span class="scope-description">AI Training</span>
+                            <div class="scope-node">
+                                <span class="scope-name">genai</span><span class="scope-description">Generative AI
+                                    Training</span>
+                            </div>
+                        </div>
+                        <div class="scope-node">
+                            <span class="scope-name">search</span><span class="scope-description">Search Indexing</span>
+                        </div>
+                        <div class="scope-node">
+                            <span class="scope-name">inference</span><span class="scope-description">AI Inference</span>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
-
-        <!-- Rest of the content sections remain the same -->
-        <!-- Detailed Content Section -->
-        <div class="max-w-6xl mx-auto px-4 py-16">
-            <div class="content-section">
-                <h2>What Users Deserve: True Data Ownership</h2>
-                <p>Imagine a different world—one where users actually control their digital contributions:</p>
-
-                <h3>Personal AI Assistants</h3>
-                <p>
-                    You should be able to create a chatbot trained specifically on your own posts, replies, and
-                    expertise. Imagine having an AI assistant that understands your writing style, remembers your
-                    professional insights, and can help you draft content that sounds authentically like you. This is
-                    your intellectual property—you should own the AI trained on it.
-                </p>
-
-                <h3>Community Knowledge Bases</h3>
-                <p>
-                    Groups of users should be able to pool their data consensually to create specialized AI models. A
-                    community of developers could create a programming assistant trained on their collective
-                    discussions. Medical professionals could build diagnostic aids from their anonymized case
-                    discussions. Academic researchers could develop field-specific tools from their scholarly exchanges.
-                </p>
-
-                <h3>Selective Data Licensing</h3>
-                <p>
-                    Just as you choose who can see your private posts, you should control who can train AI models on
-                    your content. Want to share with non-profit research? Opt in. Prefer to keep your data away from
-                    certain companies? Opt out. Believe your expertise is valuable enough to charge for? Set your price.
-                </p>
-
-                <h3>Revenue Sharing</h3>
-                <p>
-                    If your data helps train a commercial AI model, you should get a cut of the profits. The current
-                    system where platforms capture 100% of the value from user-generated data is unsustainable and
-                    unfair.
-                </p>
-
-                <h2>The Technology Exists</h2>
-                <p>None of this is technically impossible. We already have:</p>
-                <ul class="list-disc">
-                    <li><strong>Personal AI training:</strong> Tools like GPT fine-tuning can create personalized models
-                        from individual datasets</li>
-                    <li><strong>Federated learning:</strong> Technology that allows AI training across distributed data
-                        without centralizing it</li>
-                    <li><strong>Blockchain-based licensing:</strong> Systems for tracking data usage and automatically
-                        distributing payments</li>
-                    <li><strong>Privacy-preserving AI:</strong> Methods to train models while protecting individual
-                        privacy</li>
-                </ul>
-                <p>What's missing isn't technology—it's the will to change a system that currently benefits platforms
-                    and AI companies at users' expense.</p>
-
-                <h2>Real-World Applications</h2>
-                <p>Consider the possibilities:</p>
-
-                <p><strong>For Professionals:</strong> A marketing consultant could create an AI trained on their
-                    successful campaigns, licensing it to clients or selling access to their strategic insights.</p>
-
-                <p><strong>For Educators:</strong> Teachers could develop personalized tutoring bots trained on their
-                    most effective explanations, helping students even outside class hours.</p>
-
-                <p><strong>For Communities:</strong> Medical support groups could create AI counselors trained on their
-                    collective experiences, providing 24/7 peer support to new members.</p>
-
-                <p><strong>For Creators:</strong> Writers could develop AI assistants that help with research and
-                    drafting, trained specifically on their style and expertise.</p>
-
-                <h2>The Path Forward</h2>
-                <p>We need platform policies and regulations that recognize users' rights to:</p>
-                <ol class="list-decimal list-inside space-y-2">
-                    <li><strong>Full data portability:</strong> Complete, machine-readable exports of all user data and
-                        interactions</li>
-                    <li><strong>Granular consent controls:</strong> Ability to approve or deny specific uses of personal
-                        data</li>
-                    <li><strong>Revenue sharing:</strong> Fair compensation when personal data contributes to commercial
-                        AI models</li>
-                    <li><strong>Third-party tool access:</strong> APIs that allow users to train personal AI models on
-                        their own data</li>
-                    <li><strong>Community data pooling:</strong> Systems for groups to consensually aggregate their data
-                        for shared AI development</li>
-                </ol>
-
-                <h2>Why This Matters Now</h2>
-                <p>
-                    As AI becomes central to how we work, learn, and communicate, control over training data becomes a
-                    fundamental economic and creative right. The current system creates a new form of digital feudalism:
-                    users as serfs generating value for AI lords who own the means of production.
-                </p>
-                <p>
-                    But it doesn't have to be this way. The knowledge economy should benefit those who create the
-                    knowledge. Your insights, your creativity, your expertise—these have value. And in a fair system,
-                    that value should flow back to you.
-                </p>
-
-                <h2>Taking Action</h2>
-                <p>
-                    The conversation is already starting. Some platforms are experimenting with user compensation
-                    models. Governments are considering data rights legislation. AI companies are facing pressure to be
-                    more transparent about training data sources.
-                </p>
-                <p>But real change will require users to demand their rights collectively. We need to:</p>
-                <ul class="list-disc">
-                    <li>Advocate for stronger data portability laws</li>
-                    <li>Support platforms that offer fair revenue sharing</li>
-                    <li>Demand transparency about how our data is used in AI training</li>
-                    <li>Build tools that give users control over their digital contributions</li>
-                </ul>
-                <p><strong>Your thoughts, your data, your rights. It's time to take them back.</strong></p>
+                <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                    <h4 class="font-bold text-blue-300 mb-2">Example Content-Usage Header:</h4>
+                    <code class="text-sm text-blue-200">
+                        Content-Usage: tdm=n, ai=n, search=y, inference=y
+                    </code>
+                    <p class="text-xs text-blue-300 mt-2">
+                        This allows search indexing and AI inference, but prohibits training data mining.
+                    </p>
+                </div>
             </div>
         </div>
 
         <!-- How It Works Section -->
         <div class="max-w-5xl mx-auto px-4 py-16">
             <div class="free-border rounded-xl p-10 mb-20 bg-green-500/5">
-                <h2 class="text-3xl font-bold mb-12 text-center">How Data Liberation Works</h2>
+                <h2 class="text-3xl font-bold mb-12 text-center">How FreeMyX Works</h2>
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center">
                         <div
                             class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
                             1
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Vote & Authorize</h3>
+                        <h3 class="text-xl font-bold mb-3">Connect Your X Account</h3>
                         <p class="text-gray-400">
-                            Cast your vote and connect your X account through secure OAuth with custom scopes based on
-                            your choices
+                            Securely connect your X account to configure content usage preferences
                         </p>
                     </div>
                     <div class="text-center">
@@ -888,10 +264,9 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                             class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
                             2
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Control</h3>
+                        <h3 class="text-xl font-bold mb-3">Set Your Preferences</h3>
                         <p class="text-gray-400">
-                            Manage which third-party applications can access your liberated X data according to your
-                            vote preferences
+                            Configure exactly how your content can be used: training, search, inference, etc.
                         </p>
                     </div>
                     <div class="text-center">
@@ -899,15 +274,16 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                             class="w-16 h-16 mx-auto mb-6 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-xl">
                             3
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Freedom</h3>
+                        <h3 class="text-xl font-bold mb-3">Publish Your Rights</h3>
                         <p class="text-gray-400">
-                            Your vote is recorded and your data works for you across multiple platforms according to
-                            your authorization
+                            Your preferences become publicly queryable, enabling AI systems to respect your choices
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script src="love.js"></script>
 
         <!-- Value Props Section -->
         <div class="max-w-5xl mx-auto px-4 py-16">
@@ -916,70 +292,77 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                     <div class="text-green-400 mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Vote & Control</h3>
-                    <p class="text-gray-400 text-lg">
-                        Your data belongs to you. Vote on how it should be used and authorize specific access levels.
-                    </p>
-                </div>
-
-                <div class="free-border rounded-xl p-8 hover:bg-green-500/5 transition-all duration-300 group">
-                    <div class="text-green-400 mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4">Granular Authorization</h3>
-                    <p class="text-gray-400 text-lg">
-                        Your vote determines the exact X API scopes requested, giving you precise control over data
-                        access.
-                    </p>
-                </div>
-
-                <div class="free-border rounded-xl p-8 hover:bg-green-500/5 transition-all duration-300 group">
-                    <div class="text-green-400 mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Secure & Transparent</h3>
+                    <h3 class="text-2xl font-bold mb-4">Standard Compliant</h3>
                     <p class="text-gray-400 text-lg">
-                        Your vote is recorded, your authorization is transparent, and your data freedom is secure.
+                        Uses the emerging IETF standard for AI content usage preferences
+                    </p>
+                </div>
+
+                <div class="free-border rounded-xl p-8 hover:bg-green-500/5 transition-all duration-300 group">
+                    <div class="text-green-400 mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Granular Control</h3>
+                    <p class="text-gray-400 text-lg">
+                        Fine-grained control over training, search, inference, and commercial use
+                    </p>
+                </div>
+
+                <div class="free-border rounded-xl p-8 hover:bg-green-500/5 transition-all duration-300 group">
+                    <div class="text-green-400 mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Public Registry</h3>
+                    <p class="text-gray-400 text-lg">
+                        AI systems can check your preferences before using your content
                     </p>
                 </div>
             </div>
         </div>
 
+        <div id="lovewall"></div>
+
         <!-- Final CTA Section -->
         <div class="max-w-5xl mx-auto px-4 py-16">
-            <div
-                class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16 break-chains">
+            <div class="free-border rounded-xl p-12 bg-gradient-to-r from-green-900/30 to-emerald-900/30 mb-16">
                 <div class="text-center">
-                    <h2 class="text-4xl font-bold mb-6">Ready to Vote and Take Control?</h2>
+                    <h2 class="text-4xl font-bold mb-6">Ready to Set Your Preferences?</h2>
                     <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-xl">
-                        Join the movement for data liberation. Cast your vote and authorize your X account to start
-                        controlling how your
-                        data is used.
+                        Join the movement for standardized AI content preferences.
+                        Take control of how your X data is used by AI systems.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 mb-6">
-                        <a href="#poll"
+                        <a href="/config"
                             class="bg-green-600 hover:bg-green-700 px-12 py-6 rounded-full font-bold text-xl transition-all button-glow flex items-center gap-3">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
-                            Vote & Free My X Data
+                            Configure My Preferences
                         </a>
-
+                        <a href="/list.json"
+                            class="bg-blue-600 hover:bg-blue-700 px-12 py-6 rounded-full font-bold text-xl transition-all button-glow flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            View Public Registry
+                        </a>
                     </div>
                     <p class="text-sm text-gray-400">
-                        Secure OAuth authorization with custom scopes. Read our <a href="/terms"
-                            class="text-green-400 underline">Terms of Service</a> and <a href="/privacy"
-                            class="text-green-400 underline">Privacy Policy</a>
+                        Secure OAuth authorization. Read our <a href="/terms" class="text-green-400 underline">Terms of
+                            Service</a> and <a href="/privacy" class="text-green-400 underline">Privacy Policy</a>
                     </p>
                 </div>
             </div>
@@ -990,128 +373,15 @@ https://letmeprompt.com/previous-prompt-ht-jjwjwn0
                     <a href="/privacy" class="hover:text-green-400 transition-colors">Privacy</a>
                     <a href="/terms" class="hover:text-green-400 transition-colors">Terms</a>
                     <a href="/contact" class="hover:text-green-400 transition-colors">Contact</a>
+                    <a href="https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/"
+                        class="hover:text-green-400 transition-colors">IETF Spec</a>
                 </div>
                 <p class="text-sm">
-                    © 2025 FreeMy X. Empowering data liberation through democratic voting. Not affiliated with X Corp.
+                    © 2025 FreeMyX. Implementing IETF AI Content Preferences. Not affiliated with X Corp.
                 </p>
             </div>
         </div>
     </main>
-
-    <script>
-        // Handle radio button changes for access level
-        document.querySelectorAll('input[name="access_level"]').forEach(radio => {
-            radio.addEventListener('change', function () {
-                const refinementSection = document.getElementById('refinement-section');
-                const customOptions = document.querySelectorAll('input[name="custom_access"]');
-
-                if (this.value === 'custom') {
-                    refinementSection.classList.add('active');
-                    // Enable custom checkboxes
-                    customOptions.forEach(checkbox => {
-                        checkbox.disabled = false;
-                        checkbox.closest('.poll-option').classList.remove('disabled');
-                    });
-                } else {
-                    refinementSection.classList.remove('active');
-                    // Disable and uncheck custom checkboxes
-                    customOptions.forEach(checkbox => {
-                        checkbox.disabled = true;
-                        checkbox.checked = false;
-                        checkbox.closest('.poll-option').classList.remove('checked');
-                        checkbox.closest('.poll-option').classList.add('disabled');
-                    });
-                }
-
-                // Update visual state
-                this.closest('.poll-option').classList.add('checked');
-                document.querySelectorAll('input[name="access_level"]').forEach(other => {
-                    if (other !== this) {
-                        other.closest('.poll-option').classList.remove('checked');
-                    }
-                });
-            });
-        });
-
-        // Handle checkbox visual feedback for custom access
-        document.querySelectorAll('input[name="custom_access"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const pollOption = this.closest('.poll-option');
-                if (this.checked) {
-                    pollOption.classList.add('checked');
-                } else {
-                    pollOption.classList.remove('checked');
-                }
-            });
-        });
-
-        // Handle poll form submission
-        document.getElementById('data-usage-poll').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const accessLevel = document.querySelector('input[name="access_level"]:checked');
-
-            if (!accessLevel) {
-                alert('Please select an access level to proceed.');
-                return;
-            }
-
-            let choices = [];
-
-            if (accessLevel.value === '1') {
-                // Fully public domain
-                choices = ['1'];
-            } else if (accessLevel.value === 'custom') {
-                // Get selected custom access options
-                const customChecked = document.querySelectorAll('input[name="custom_access"]:checked');
-                if (customChecked.length === 0) {
-                    alert('Please select at least one custom access option.');
-                    return;
-                }
-                choices = Array.from(customChecked).map(cb => cb.value);
-            }
-
-            // Create query string with vote choices
-            const queryString = `?vote=${choices.join(',')}`;
-
-            // Navigate to login with vote choices
-            window.location.href = '/login' + queryString;
-        });
-
-        // Make poll options clickable
-        document.querySelectorAll('.poll-option').forEach(option => {
-            option.addEventListener('click', function (e) {
-                e.stopPropagation();
-
-                const radio = this.querySelector('input[type="radio"]');
-                const checkbox = this.querySelector('input[type="checkbox"]');
-
-                if (radio && !radio.disabled) {
-                    radio.checked = true;
-                    radio.dispatchEvent(new Event('change', { bubbles: true }));
-                } else if (checkbox && !checkbox.disabled) {
-                    checkbox.checked = !checkbox.checked;
-                    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
-                }
-            }, true);
-        });
-
-        // Prevent label interference
-        document.querySelectorAll('.poll-option label').forEach(label => {
-            label.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            });
-        });
-
-        // Prevent input interference with container clicks
-        document.querySelectorAll('.poll-option input').forEach(input => {
-            input.addEventListener('click', function (e) {
-                e.stopPropagation();
-            });
-        });
-    </script>
-
 </body>
 
 </html>
